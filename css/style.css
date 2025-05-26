@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    background-color: #f0f0f0;
+}
+.sidebar {
+    width: 20%;
+    background-color: #e0e0e0;
+    padding: 20px;
+}
+.main {
+    width: 60%;
+    padding: 20px;
+}
+.calendar {
+    width: 20%;
+    background-color: #dff0d8;
+    padding: 20px;
+}
+h2 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+.module, .calendar-entry {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #ccc;
+}
