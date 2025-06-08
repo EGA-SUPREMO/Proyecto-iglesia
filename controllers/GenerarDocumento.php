@@ -6,10 +6,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nombre = $_POST["nombre"];
     $fecha = $_POST["fecha"];
 
-    $documento = new Documento();
-    $archivo_generado = $documento->crearDocumento($plantilla, $nombre, $fecha);
+    $ruta_plantilla = "../public/plantillas/" . $plantilla;
 
-    header("Location: ../public/documentos/$archivo_generado");
-    exit;
+    $documento = new Documento();
+    $archivo_generado = $documento->crearDocumento($ruta_plantilla, $nombre, $fecha);
+
+    if ($archivo_generado) {
+        header("Location: ../public/documentos/$archivo_generado");
+        exit;
+    } else {
+        echo "Error: tipo de archivo no soportado o falló la generación.";
+    }
 }
 ?>

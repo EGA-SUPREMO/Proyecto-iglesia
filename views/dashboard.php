@@ -15,6 +15,7 @@
             <h2>Opciones Disponibles</h2>
             <nav>
                 <ul>
+                    <li><a href="seleccionar_plantilla.php">Gestionar Plantillas</a></li>
                     <li><a href="feligreses.php">Gestionar Feligreses</a></li>
                     <li><a href="servicios.php">Gestionar Servicios</a></li>
                     <li><a href="pagos.php">Registro de Pagos</a></li>
