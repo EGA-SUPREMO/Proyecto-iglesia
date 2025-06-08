@@ -29,7 +29,7 @@ $plantillas = array_filter($plantillas, fn($file) => !in_array($file, ['.', '..'
                 <input type="text" name="nombre" required>
 
                 <label>Fecha de emisión:</label>
-                <input type="date" name="fecha" required>
+                <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
 
                 <button type="submit">Generar Documento</button>
             </form>

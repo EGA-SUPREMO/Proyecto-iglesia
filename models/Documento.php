@@ -2,11 +2,28 @@
 require "../config.php";
 require "../vendor/autoload.php";
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use TCPDF;
 
 class Documento {
+
+    public function crearDocumentoDocx($plantilla, $ruta_salida, $nombre, $fecha) {
+        $nombre_plantilla = basename($plantilla);
+
+        switch ($nombre_plantilla) {
+            case "test.docx":
+                $template = new TemplateProcessor($plantilla);
+                $template->setValue('nombre', $nombre);
+                $template->setValue('fecha', $fecha);
+                $template->saveAs($ruta_salida);
+                break;
+            default:
+                return;
+        }
+    }
+
     public function crearDocumento($plantilla, $nombre, $fecha) {
         $extension = pathinfo($plantilla, PATHINFO_EXTENSION);
         $archivo_final = "documento_" . time() . ".$extension";
@@ -14,12 +31,7 @@ class Documento {
 
         switch ($extension) {
             case "docx":
-                $phpWord = new PhpWord();
-                $section = $phpWord->addSection();
-                $section->addText("Documento generado para: $nombre");
-                $section->addText("Fecha: $fecha");
-                $writer = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-                $writer->save($ruta_salida);
+                $this->crearDocumentoDocx($plantilla, $ruta_salida, $nombre, $fecha);
                 break;
 
             case "xlsx":
