@@ -6,6 +6,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nombre = $_POST["nombre"];
     $fecha = $_POST["fecha"];
 
+#    $datos = [
+#    'nombre' => $_POST['nombre'],
+#    'fecha' => $_POST['fecha'],
+    
     $ruta_plantilla = "../public/plantillas/" . $plantilla;
 
     $documento = new Documento();
