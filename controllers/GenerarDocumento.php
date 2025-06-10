@@ -4,10 +4,7 @@ require_once "../models/Documento.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $plantilla = $_POST["plantilla"];
 
-    $datos = [
-    'nombre' => $_POST['nombre'],
-    'fecha' => $_POST['fecha']
-    ];
+    $datos = $_POST;
     $ruta_plantilla = "../public/plantillas/" . $plantilla;
 
     $documento = new Documento();
