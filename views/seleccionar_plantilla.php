@@ -38,27 +38,28 @@ $plantilla_seleccionada = $_POST['plantilla'] ?? '';
                 <button type="submit">Cargar Formulario</button>
             </form>
         </section>
-                <?php
-                // Si la plantilla seleccionada en el paso anterior es "test", mostramos el segundo formulario.
-                if ($plantilla_seleccionada === 'test.docx'):
-                ?>
-                    
-                    <section class="contenedor">
-                        <h2>Paso 2: Rellena los datos</h2>
-                        <form method="post" action="../controllers/GenerarDocumento.php">
-                            
-                            <input type="hidden" name="plantilla" value="<?= htmlspecialchars($plantilla_seleccionada) ?>">
+        <?php
+        if ($plantilla_seleccionada != ''):
+        ?>
+            <section class="contenedor">
+                <h2>Paso 2: Rellena los datos</h2>
+                <form method="post" action="../controllers/GenerarDocumento.php">
+                    <input type="hidden" name="plantilla" value="<?= htmlspecialchars($plantilla_seleccionada) ?>">
+                    <?php
+                    $template_file_name = str_replace('.docx', '', $plantilla_seleccionada);
+                    $include_path = $template_file_name . '.php';
 
-                            <?php
-                            // Incluimos los campos del formulario de bautismo
-                            include 'constancia bautiso.php';
-                            ?>
-                            
-                            <button type="submit">Generar Documento Final</button>
-                        </form>
-                    </section>
-
-                <?php endif; ?>
+                    if (file_exists($include_path)) {
+                        include $include_path;
+                    } else {
+                        echo '<p>Error: plantilla no existe.</p>';
+                    }
+                    ?>
+                    <br>
+                    <button type="submit">Generar Documento Final</button>
+                </form>
+            </section>
+        <?php endif; ?>
     </main>
 </body>
 </html>
