@@ -3,17 +3,15 @@ require_once "../models/Documento.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $plantilla = $_POST["plantilla"];
-    $nombre = $_POST["nombre"];
-    $fecha = $_POST["fecha"];
 
-#    $datos = [
-#    'nombre' => $_POST['nombre'],
-#    'fecha' => $_POST['fecha'],
-    
+    $datos = [
+    'nombre' => $_POST['nombre'],
+    'fecha' => $_POST['fecha']
+    ];
     $ruta_plantilla = "../public/plantillas/" . $plantilla;
 
     $documento = new Documento();
-    $archivo_generado = $documento->crearDocumento($ruta_plantilla, $nombre, $fecha);
+    $archivo_generado = $documento->crearDocumento($ruta_plantilla, $datos);
 
     if ($archivo_generado) {
         header("Location: ../public/documentos/$archivo_generado");
