@@ -15,8 +15,9 @@ class Documento {
         switch ($nombre_plantilla) {
             case "test.docx":
                 $template = new TemplateProcessor($plantilla);
-                $template->setValue('nombre', $datos['nombre']);
-                $template->setValue('fecha', $datos['fecha']);
+                foreach ($datos as $key => $value) {
+                    $template->setValue($key, $value);
+                }
                 $template->saveAs($ruta_salida);
                 break;
             default:
