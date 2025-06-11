@@ -13,6 +13,20 @@ header {
     text-align: center;
     padding: 15px;
 }
+/*
+:focus {
+  outline: 5px solid #007bff; 
+  outline-offset: 2px; 
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5);
+}
+*/
+:focus {
+  outline: 4px solid #000bff; /* A bright yellow outline */
+  outline-offset: 3px;
+  background-color: #e9ecef; /* A light grey background */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* A subtle shadow */
+/*  transition: all 0.2s ease-in-out; /* Smooth transition for visual feedback */
+}
 
 /* Contenedor principal */
 .contenedor {

@@ -21,7 +21,7 @@ $plantilla_seleccionada = $_POST['plantilla'] ?? '';
     <main>
         <section class="contenedor">
             <h2>Paso 1: Elige la plantilla</h2>
-            <form method="post" action="">
+            <form method="post" action="" autocomplete="off">
                 <label for="plantilla">Selecciona la plantilla:</label>
                 <select name="plantilla" id="plantilla" required>
                     <option value="">-- Elige una opción --</option>
@@ -43,7 +43,7 @@ $plantilla_seleccionada = $_POST['plantilla'] ?? '';
         ?>
             <section class="contenedor">
                 <h2>Paso 2: Rellena los datos</h2>
-                <form method="post" action="../controllers/GenerarDocumento.php">
+                <form method="post" action="../controllers/GenerarDocumento.php" autocomplete="off">
                     <input type="hidden" name="plantilla" value="<?= htmlspecialchars($plantilla_seleccionada) ?>">
                     <?php
                     $template_file_name = str_replace('.docx', '', $plantilla_seleccionada);
