@@ -7,7 +7,7 @@
     <input type="text" id="nombre" name="nombre" required>
     <br>
     <label for="fecha">Fecha:</label>
-    <input type="date" id="fecha" name="fecha" required>
+    <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
     <br>
     <label for="descripcion">Descripción:</label>
     <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
