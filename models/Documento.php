@@ -12,17 +12,11 @@ class Documento {
     public function crearDocumentoDocx($plantilla, $ruta_salida, $datos) {
         $nombre_plantilla = basename($plantilla);
 
-        switch ($nombre_plantilla) {
-            case "test.docx":
-                $template = new TemplateProcessor($plantilla);
-                foreach ($datos as $key => $value) {
-                    $template->setValue($key, $value);
-                }
-                $template->saveAs($ruta_salida);
-                break;
-            default:
-                return;
+        $template = new TemplateProcessor($plantilla);
+        foreach ($datos as $key => $value) {
+            $template->setValue($key, $value);
         }
+        $template->saveAs($ruta_salida);
     }
 
     public function crearDocumento($plantilla, $datos) {
