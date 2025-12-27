@@ -180,7 +180,7 @@ class Feligres extends ModeloBase
     {
         $this->nacionalidad = strtoupper(Validador::validarString($nacionalidad, "nacionalidad", 1, 1));
     }
-    
+
     public function setPartidaDeNacimiento($partida_de_nacimiento)
     {
         $this->partida_de_nacimiento = Validador::validarString($partida_de_nacimiento, "partida de nacimiento", 30, 4);

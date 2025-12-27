@@ -22,7 +22,7 @@ class GestionPeticionMisa
             $datos['fecha_fin'] = FuncionesComunes::limpiarString($datos['fecha_fin']);
             $datos['fecha_inicio'] = FuncionesComunes::limpiarString($datos['fecha_inicio']);
             $datos['objeto_de_peticion_nombre'] = FuncionesComunes::limpiarString($datos['objeto_de_peticion_nombre']);
-            
+
             return $this->consultarOCrearMisas($datos);
         }
     }

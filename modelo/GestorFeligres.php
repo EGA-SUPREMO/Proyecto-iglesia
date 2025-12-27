@@ -24,18 +24,18 @@ class GestorFeligres extends GestorBase
     private function separarCedula($cedulaCompleta)
     {
         $cedulaCompleta = strtoupper($cedulaCompleta);
-        
+
         if (str_starts_with($cedulaCompleta, 'V') || str_starts_with($cedulaCompleta, 'E')) {
             $nacionalidad = substr($cedulaCompleta, 0, 1);
             $numero = substr($cedulaCompleta, 1);
         } else {
-            $nacionalidad = 'V'; 
+            $nacionalidad = 'V';
             $numero = $cedulaCompleta;
         }
         $numeroLimpio = preg_replace('/[^0-9]/', '', $numero);
 
         return [
-            'nacionalidad' => $nacionalidad, 
+            'nacionalidad' => $nacionalidad,
             'numero' => $numeroLimpio
         ];
     }

@@ -89,7 +89,7 @@ class ServicioMisa extends ServicioBase
         }
 
         if ($this->gestorMisa->existeMisaEnFechaHora($fecha_hora_misa->format('Y-m-d H:i:s'))) {
-            return; 
+            return;
         }
 
         $misa = new Misa();
