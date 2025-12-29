@@ -106,7 +106,24 @@ class Formulario
             $personas_encontradas[$id['rol']] = $persona_objeto;
         }
 
-        $datosConstancia = $this->obtenerDatosConstanciaRelacionados([$personas_encontradas['contrayente_1']->getId(), $personas_encontradas['contrayente_2']->getId()], $nombreTabla);
+        $contrayente1 = $personas_encontradas['contrayente_1'] ?? null;
+        $contrayente2 = $personas_encontradas['contrayente_2'] ?? null;
+        $datosConstancia = [];
+
+        if ($contrayente1 != null && $contrayente2 != null) {
+            $datosConstancia = $this->obtenerDatosConstanciaRelacionados(
+                [$contrayente1->getId(), $contrayente2->getId()],
+                $nombreTabla
+            );
+        } elseif ($contrayente1 != null xor $contrayente2 != null) {
+            if ($contrayente1 != null) {
+                $datosConstancia['contrayente_1-'] = $contrayente1->toArrayParaMostrar('formulario');
+            } else {
+                $datosConstancia['contrayente_2-'] = $contrayente2->toArrayParaMostrar('formulario');
+            }
+
+            $datosConstancia['']['id'] = 0;
+        }
 
         return $datosConstancia;
     }
