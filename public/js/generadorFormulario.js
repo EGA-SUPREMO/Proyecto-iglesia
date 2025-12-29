@@ -169,8 +169,8 @@ function soloNumeroConNacionalidad(e) {
     const caretPos = input.selectionStart;
 
     const charCode = e.which || e.keyCode;
-    if (charCode === 8 || charCode === 9 || charCode === 13 || charCode === 37 || charCode === 39 || charCode === 46) {
-        return true; // Permitir Backspace, Tab, Enter, Delete, flechas
+    if (charCode === 8 || charCode === 9 || charCode === 13) {
+        return true; // Permitir Backspace, Tab, Enter, Delete
     }
 
     // --- Lógica de la validación ---
@@ -758,7 +758,7 @@ function autocompletarConstanciaLibro($elemento) {
  * @returns {string} La cadena formateada (ej: "V-12.345.678") o la cadena vacía si no hay números.
  */
 function formatearCedula(cedulaStr) {
-    if (!cedulaStr) {
+    if (!cedulaStr || cedulaStr.length < 2) {
         return '';
     }
 
@@ -767,10 +767,9 @@ function formatearCedula(cedulaStr) {
     // Regex: Busca la letra inicial (V o E) opcional seguida de los números.
     const match = cedulaLimpia.match(/^([VE])?(\d+)$/i);
 
-    const letra = match[1] || 'V'; // Letra de nacionalidad (V o E)
-    const numeros = match[2];     // Solo la parte numérica
+    const letra = match[1] || 'V';
+    const numeros = match[2];
     
-    // 3. Aplicar formato
     return formatearNumeros(letra, numeros);
     
 }
