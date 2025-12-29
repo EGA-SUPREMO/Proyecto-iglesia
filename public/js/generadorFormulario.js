@@ -223,6 +223,7 @@ function consultarMisasPorRango() {
         'fecha_inicio': $fecha_inicio.val(),
         'fecha_fin': $fecha_fin.val(),
         'objeto_de_peticion_nombre': $objeto_de_peticion_nombre.val(),
+        'peticion_id': $(`#id`).val(),
         'metodo': 'consultarOCrearMisas',
     };
     
