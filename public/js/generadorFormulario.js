@@ -161,6 +161,7 @@ function validarLista($elemento) {
     );
 }
 
+
 function soloNumeroConNacionalidad(e) {
     const input = e.target;
     const char = String.fromCharCode(e.which || e.keyCode);
@@ -749,7 +750,79 @@ function autocompletarConstanciaLibro($elemento) {
         pedirDatos(JSON.stringify(datos), completarCampos);
     }
 }
+/**
+ * Formatea una cadena de cédula de identidad a la estructura estándar (ej: V-12.345.456).
+ * No realiza validaciones de contenido, solo de presentación.
+ *
+ * @param {string} cedulaStr - La cadena de cédula sin formato (ej: "v12345678").
+ * @returns {string} La cadena formateada (ej: "V-12.345.678") o la cadena vacía si no hay números.
+ */
+function formatearCedula(cedulaStr) {
+    if (!cedulaStr) {
+        return '';
+    }
 
+    // 1. Limpiar y capturar la letra y los números
+    const cedulaLimpia = cedulaStr.toUpperCase().trim();
+    // Regex: Busca la letra inicial (V o E) opcional seguida de los números.
+    const match = cedulaLimpia.match(/^([VE])?(\d+)$/i);
+
+    const letra = match[1] || 'V'; // Letra de nacionalidad (V o E)
+    const numeros = match[2];     // Solo la parte numérica
+    
+    // 3. Aplicar formato
+    return formatearNumeros(letra, numeros);
+    
+}
+
+/**
+ * Función auxiliar para aplicar la puntuación a la parte numérica de la cédula.
+ * @param {string} letra - La letra inicial (V, E, o vacío).
+ * @param {string} numeros - La cadena de números.
+ * @returns {string} La cédula formateada.
+ */
+function formatearNumeros(letra, numeros) {
+    if (numeros.length <= 3) {
+        return `${letra}-${numeros}`;
+    }
+    // Expresión regular para añadir puntos de miles (12345678 -> 12.345.678)
+    // El punto de miles debe ser antes de los últimos 3 dígitos, y antes de los 6 dígitos.
+    let parteNumericaFormateada = numeros.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    // Se reconstruye el resultado final
+    return `${letra}-${parteNumericaFormateada}`;
+}
+
+/**
+ * Busca el subtítulo asociado a un campo de cédula y actualiza su contenido.
+ * Asume la estructura de nombres:
+ * - Campo de Cédula: "prefijo-cedula" (ej: "progenitor_2-cedula")
+ * - Subtítulo:       "subtitulo-prefijo-datos" (ej: "subtitulo-progenitor_2-datos")
+ * @param {jQuery} $elementoCedula - El campo de entrada de la cédula que ha cambiado.
+ */
+function actualizarSubtituloCedula($elementoCedula) {
+    const nombreCampo = $elementoCedula.attr('name'); // Ej: progenitor_2-cedula
+    const valorCedula = formatearCedula($elementoCedula.val());
+
+    // 1. Extraer el prefijo de la entidad (ej: 'progenitor_2-')
+    const prefijoEntidad = nombreCampo.substring(0, nombreCampo.lastIndexOf('cedula'));
+
+    // 2. Determinar el ID del subtítulo objetivo (ej: 'subtitulo-progenitor_2-datos')
+    const idSubtitulo = `subtitulo-${prefijoEntidad}datos`;
+    const $subtitulo = $(`#${idSubtitulo}`);
+
+    if ($subtitulo.length) {
+        let textoActual = $subtitulo.html();
+
+        const regexCedula = /\s*\((C\.I\.\s*[^)]*)\)$/i; 
+        const nuevaCedula = `(C.I. ${valorCedula})`;
+
+        if (regexCedula.test(textoActual)) {
+            let nuevoTexto = textoActual.replace(regexCedula, ` ${nuevaCedula}`);
+            $subtitulo.html(nuevoTexto);
+        }
+    }
+
+}
 
 
 
@@ -812,6 +885,17 @@ function asignarAtributosComunes($element, properties) {
 
             $tituloFormulario.text(nuevoPrefijo + textoBase);
         });
+    }
+    if ($element.attr('name') && $element.attr('name').includes('-cedula')) {
+        $element.on('keyup change', function() {
+            actualizarSubtituloCedula($(this));
+        });
+        
+        if ($element.val()) {
+             setTimeout(function() {
+                actualizarSubtituloCedula($element);
+            }, 250);
+        }
     }
 
     if (properties.autocompletarMetodo) {

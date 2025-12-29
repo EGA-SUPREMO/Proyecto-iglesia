@@ -185,7 +185,7 @@
                         ] 
                     },
 
-                { type: 'subtitulo', name: 'subtitulo-padre-datos', value: 'Datos del Progenitor 1'},
+                { type: 'subtitulo', name: 'subtitulo-padre-datos', value: 'Datos del Progenitor 1 (C.I. )'},
                 { type: 'fila', 
                     campos: [
                         { type: 'text', name: 'padre-primer_nombre', label: 'Primer Nombre', required: true, validarMetodo: 'validarNombre', value: datosPHP.padre?.primer_nombre ?? '' },
@@ -199,7 +199,7 @@
                     ] 
                 },
 
-                { type: 'subtitulo', name: 'subtitulo-padre-datos', value: 'Datos del Progenitor 2'},
+                { type: 'subtitulo', name: 'subtitulo-madre-datos', value: 'Datos del Progenitor 2 (C.I. )'},
                 { type: 'fila', 
                     campos: [
                         { type: 'text', name: 'madre-primer_nombre', label: 'Primer Nombre', required: true, validarMetodo: 'validarNombre', value: datosPHP.madre?.primer_nombre ?? '' },
@@ -255,7 +255,7 @@
                     ] 
                 },
 
-                { type: 'subtitulo', name: 'subtitulo-contrayente_1-datos', value: 'Datos del Contrayente 1'},
+                { type: 'subtitulo', name: 'subtitulo-contrayente_1-datos', value: 'Datos del Contrayente 1 (C.I. )'},
                 { type: 'fila', 
                     campos: [
                         { type: 'text', name: 'contrayente_1-primer_nombre', label: 'Primer Nombre', required: true, validarMetodo: 'validarNombre', value: datosPHP.contrayente_1?.primer_nombre ?? '' },
@@ -270,7 +270,7 @@
                 },
                 { type: 'text', name: 'contrayente_1-localidad', label: 'Natural de (Ciudad):', required: true, validarMetodo: 'validarLugar', value: datosPHP.contrayente_1?.localidad ?? '' },
 
-                { type: 'subtitulo', name: 'subtitulo-contrayente_2-datos', value: 'Datos del Contrayente 2'},
+                { type: 'subtitulo', name: 'subtitulo-contrayente_2-datos', value: 'Datos del Contrayente 2 (C.I. )'},
                 { type: 'fila', 
                     campos: [
                         { type: 'text', name: 'contrayente_2-primer_nombre', label: 'Primer Nombre', required: true, validarMetodo: 'validarNombre', value: datosPHP.contrayente_2?.primer_nombre ?? '' },
@@ -337,7 +337,7 @@
                 },
                 { type: 'date', name: 'feligres-fecha_nacimiento', label: 'Fecha de Nacimiento', required: true, validarMetodo: 'validarFechaNacimiento', value: datosPHP.feligres?.fecha_nacimiento ?? '' },
                 
-                { type: 'subtitulo', name: 'subtitulo-padre1-datos', value: 'Datos del Progenitor 1'},
+                { type: 'subtitulo', name: 'subtitulo-padre_1-datos', value: 'Datos del Progenitor 1 (C.I. )'},
                 { type: 'fila', 
                     campos: [
                         { type: 'text', name: 'padre_1-primer_nombre', label: 'Primer Nombre', required: true, validarMetodo: 'validarNombre', value: datosPHP.padre_1?.primer_nombre ?? '' },
@@ -351,7 +351,7 @@
                     ] 
                 },
 
-                { type: 'subtitulo', name: 'subtitulo-padre2-datos', value: 'Datos del Progenitor 2'},
+                { type: 'subtitulo', name: 'subtitulo-padre_2-datos', value: 'Datos del Progenitor 2 (C.I. )'},
                 { type: 'fila', 
                     campos: [
                         { type: 'text', name: 'padre_2-primer_nombre', label: 'Primer Nombre', required: true, validarMetodo: 'validarNombre', value: datosPHP.padre_2?.primer_nombre ?? '' },
