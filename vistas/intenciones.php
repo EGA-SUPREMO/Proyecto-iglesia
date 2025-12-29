@@ -7,8 +7,18 @@
                     <div class="card-body p-4 p-md-5" id="contenedor-tabla">
                         <section>
                             <h1>Intenciones de Misa</h1>
-                            <h2>Fecha de la misa:</h2>
-                            <input type="date" name="fecha-misa" id="fecha-misa" class="form-control" value="2025-10-05" required>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <h4 class="mb-2">Fecha de la misa:</h4>
+                                    <input type="date" name="fecha-misa" id="fecha-misa" class="form-control" value="2025-10-05" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="mb-2">Selecciona la misa:</h4>
+                                    <select name="misa-id" id="misa-id" class="form-control" required>
+                                        <option value="1">3:30 pm</option>
+                                    </select>
+                                </div>
+                            </div>
                             <h2 class="subtitulo-intenciones">Acción de Gracias</h2>
 <ul class="lista-compacta">
     <li data-id="101">Familia Guzmán <a href="editar.php?id=101" class="btn-accion">✎</a> <a href="borrar.php?id=101" class="btn-accion">🗑️</a></li>
@@ -82,12 +92,6 @@
             </div>
         </div>
     </main>
-
-    <footer class="bg-dark text-white text-center py-3 mt-auto shadow-lg">
-        <div class="container">
-            <p class="mb-0">&copy; 2025. Todos los derechos reservados.</p>
-        </div>
-    </footer>
 
     <script src="public/js/jquery-1.12.4.min.js"></script>
     <script src="public/js/bootstrap.bundle.min.js"></script>
