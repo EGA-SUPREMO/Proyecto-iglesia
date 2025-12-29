@@ -65,12 +65,35 @@ class GestorMisa extends GestorBase
                     peticion_misa pm ON m.id = pm.misa_id
                 WHERE
                     m.fecha_hora BETWEEN :inicio AND :fin
+                    AND m.permite_intenciones = 1
                     AND pm.peticion_id = :peticion_id
                 ORDER BY
                     m.fecha_hora ASC;";
 
         $valores = [
             ':peticion_id' => $peticion_id,
+            ':inicio'      => $fecha_inicio . ' 00:00:00',
+            ':fin'         => $fecha_fin . ' 23:59:59'
+        ];
+
+        return $this->hacerConsulta($sql, $valores, 'all');
+    }
+
+    public function obtenerMisasPorRangoFechas($fecha_inicio, $fecha_fin)
+    {
+        $sql = "SELECT
+                    m.*
+                FROM
+                    misas m
+                JOIN
+                    peticion_misa pm ON m.id = pm.misa_id
+                WHERE
+                    m.fecha_hora BETWEEN :inicio AND :fin
+                    AND m.permite_intenciones = 1
+                ORDER BY
+                    m.fecha_hora ASC;";
+
+        $valores = [
             ':inicio'      => $fecha_inicio . ' 00:00:00',
             ':fin'         => $fecha_fin . ' 23:59:59'
         ];

@@ -75,6 +75,15 @@ class GestionPeticionMisa
             $respuesta[] = $misa_arr;
         }
 
+        if (empty($respuesta)) {
+            $misasEncontradas = $gestorMisa->obtenerMisasPorRangoFechas($datos['fecha_inicio'], $datos['fecha_fin']);
+            if (empty($misasEncontradas)) {
+                $respuesta = ['mensaje' => "No se encontraron misas en el rango de fechas especificado. Verifique que todos los campos del formulario sean correctos"];
+            } else {
+                $respuesta = ['mensaje' => "Todas las misas para este rango de fechas ya tienen esta intención registrada."];
+            }
+        }
+
         return $respuesta;
     }
 }

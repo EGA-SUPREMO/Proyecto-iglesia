@@ -245,8 +245,8 @@ function manejarRespuestaMisas(response) {
     }
     response_anterior = response;
 
-    if (!response || response.length === 0) {// ESTO NO PUEDE IR AL COMIENZO, O SI NO BUG!
-        $('#misas_selecionadas').html('<p class="text-danger">No se encontraron misas disponibles en el rango seleccionado. Verifique que todos los campos del formulario sean correctos</p>');
+    if (!response || response.length === 0 || response.mensaje) {// ESTO NO PUEDE IR AL COMIENZO, O SI NO BUG!
+        $('#misas_selecionadas').html('<p class="text-danger">' + (response.mensaje || 'Error interno') + '</p>');
         misasDisponibles = [];
         return;
     }
