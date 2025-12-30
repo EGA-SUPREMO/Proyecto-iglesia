@@ -35,7 +35,10 @@
                 }
                 break;
 
-            case 'categoria_de_servicio':
+            case 'objeto_de_peticion':
+                formularioCampos = [
+                    { type: 'autocomplete', name: 'nombre', label: 'Por que es la intencion',  required: true, validarMetodo: 'validarNombre', value: datosPHP.nombre },
+                ];
             break;
             case 'sacerdote':
                 formularioCampos = [

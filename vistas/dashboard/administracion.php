@@ -28,6 +28,13 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="col-sm-6">
+                            <a href="?c=panel&a=index&t=objeto_de_peticion" class="card text-decoration-none text-dark h-100 lift-effect">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title mb-0">Gestionar Objetos de petición</h5>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
