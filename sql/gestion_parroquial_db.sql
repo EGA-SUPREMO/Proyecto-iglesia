@@ -27,7 +27,7 @@ USE gestion_parroquial_db;
 
 --
 -- Base de datos: `gestion parroquial`
---
+-- COMANDO A EJECUTAR: cat gestion_parroquial_db.sql dummy_data_otros.sql dummy_data_feligres.sql dummy_data_objetos_peticion.sql | mysql
 
 -- --------------------------------------------------------
 

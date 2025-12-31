@@ -1,3 +1,5 @@
+-- COMANDO A EJECUTAR: cat gestion_parroquial_db.sql dummy_data_otros.sql dummy_data_feligres.sql dummy_data_objetos_peticion.sql | mysql
+
 USE gestion_parroquial_db;
 
 INSERT INTO `feligreses` (`primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `fecha_nacimiento`, `localidad`, `municipio`, `estado`, `pais`, `cedula`, `nacionalidad`, `partida_de_nacimiento`) VALUES
