@@ -126,8 +126,8 @@ CREATE TABLE tipo_de_intencion (
 INSERT INTO tipo_de_intencion (nombre, descripcion) VALUES
 ('Acción de Gracias', 'Intención ofrecida para agradecer a Dios por favores recibidos, bendiciones, logros o acontecimientos especiales.'),
 ('Salud', 'Intención dirigida a pedir por la recuperación o el bienestar físico, mental o espiritual de una persona.'),
-('Aniversario', 'Intención ofrecida para conmemorar un aniversario de matrimonio, ordenación, fallecimiento u otro acontecimiento importante.'),
-('Difunto', 'Intención dedicada al eterno descanso del alma de una persona fallecida.')
+('Aniversarios', 'Intención ofrecida para conmemorar un aniversario de matrimonio, ordenación, fallecimiento u otro acontecimiento importante.'),
+('Difuntos', 'Intención dedicada al eterno descanso del alma de una persona fallecida.')
 ;
 
 CREATE TABLE `misas` (

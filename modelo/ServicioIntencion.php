@@ -8,6 +8,8 @@ require_once 'GestorIntencion.php';
 require_once 'GestorMisa.php';
 require_once 'ServicioBase.php';
 
+require_once 'GeneradorPdf.php';
+
 class ServicioIntencion extends ServicioBase
 {
     private $gestorObjetoDePeticion;
@@ -61,7 +63,28 @@ class ServicioIntencion extends ServicioBase
 
     public function generarPDF($misa_id)
     {
-        error_log(print_r($this->gestorPeticionMisa->obtenerIntencionesDeMisaId(472), true));
-        return GeneradorPdf::guardarPDF(self::$plantilla_nombre, $this->toArrayParaConstanciaPDF());
+        $intenciones = $this->gestorPeticionMisa->obtenerIntencionesDeMisaId($misa_id);
+        $intenciones = $this->convertirArrayAFormatoPDF($intenciones);
+        error_log(print_r($intenciones, true));
+        return GeneradorPdf::guardarPDF(self::$plantilla_nombre, $intenciones);
+    }
+
+    private function convertirArrayAFormatoPDF($array_original)
+    {
+        $array_convertido = [];
+        $mapa_traduccion = [
+                "Acción de Gracias" => "accion_de_gracias",
+                "Salud"             => "salud",
+                "Aniversarios"       => "aniversarios",
+                "Difuntos"           => "difuntos",
+            ];
+        foreach ($array_original as $item) {
+            $tipo_intencion_original = $item['tipo_intencion'];
+            $lista_nombres = $item['lista_nombres'];
+
+            $clave_normalizada = $mapa_traduccion[$tipo_intencion_original];
+            $array_convertido[$clave_normalizada] = $lista_nombres;
+        }
+        return $array_convertido;
     }
 }
