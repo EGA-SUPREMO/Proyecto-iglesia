@@ -679,14 +679,20 @@ function rellenarFormularioConDatos(datosRespuesta) {
 
 
 function pedirDatos(datos, callback, rutaPHP = "modelo/formulario.php") {
+    const $submitButton = $('button[type="submit"]');
+
+    $submitButton.prop('disabled', true).text('Procesando...');
+
     $.post(rutaPHP, { json: datos }, function(resultado) {
-        console.log("Respuesta del servidor (Objeto JS):", resultado); 
+        console.log("Respuesta del servidor (Objeto JS):", resultado);
+        $submitButton.prop('disabled', false).text('Guardar');
         if (resultado) {
             callback(resultado);
         }
     }, 'json')
     .fail(function(xhr, status, error) {
         console.log("Error en la respuesta del servidor (Objeto JS):", xhr);
+        $submitButton.prop('disabled', false).text('Guardar');
     });
 }
 
