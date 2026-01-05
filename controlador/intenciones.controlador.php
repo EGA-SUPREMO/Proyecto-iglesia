@@ -80,7 +80,8 @@ class intencionesControlador extends formularioControlador
     public function generarPDF()
     {
         $misa_id = FuncionesComunes::limpiarString($_POST['misa-id']);
-        $rutaPdf = $this->servicio->generarPDF($misa_id);
+        $fecha_misa = FuncionesComunes::limpiarString($_POST['fecha-misa']);
+        $rutaPdf = $this->servicio->generarPDF($misa_id, $fecha_misa);
         FuncionesComunes::redirigir('Location: ' . $rutaPdf);
     }
 

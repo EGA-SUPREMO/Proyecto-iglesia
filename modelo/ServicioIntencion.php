@@ -61,11 +61,23 @@ class ServicioIntencion extends ServicioBase
         }, "de registro o edicion de intencion");
     }
 
-    public function generarPDF($misa_id)
+    public function generarPDF($misa_id, $fecha_misa)
     {
         $intenciones = $this->gestorPeticionMisa->obtenerIntencionesDeMisaId($misa_id);
         $intenciones = $this->convertirArrayAFormatoPDF($intenciones);
-        error_log(print_r($intenciones, true));
+
+        $formateador = new IntlDateFormatter(
+            'es_ES',
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::NONE,
+            'America/Caracas',
+            IntlDateFormatter::GREGORIAN,
+            'EEEE'
+        );
+        $intenciones['fecha'] = $fecha_misa;
+        $datetime = new DateTime($fecha_misa, new DateTimeZone('America/Caracas'));
+        $intenciones['dia'] = $formateador->format($datetime);
+
         return GeneradorPdf::guardarPDF(self::$plantilla_nombre, $intenciones);
     }
 

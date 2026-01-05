@@ -34,7 +34,7 @@ class GestorPeticionMisa extends GestorBase
     {
         $sql = "SELECT 
                 ti.nombre AS tipo_intencion,
-                GROUP_CONCAT(op.nombre ORDER BY op.nombre ASC SEPARATOR ', ') AS lista_nombres
+                GROUP_CONCAT(op.nombre ORDER BY op.nombre ASC SEPARATOR ' - ') AS lista_nombres
             FROM 
                 peticion_misa pm
                 INNER JOIN peticiones p ON pm.peticion_id = p.id
