@@ -78,7 +78,7 @@
     <li data-id="420">La tía Elena Flores <a href="editar.php?id=420" class="btn-accion">✎</a> <a href="borrar.php?id=420" class="btn-accion">🗑️</a></li>
 </ul>
                             <div class="btn-group">
-                                <a href="agregar_intencion.php" class="btn btn-primary">
+                                <a href="?c=intenciones&a=mostrar&t=intencion" class="btn btn-primary">
                                     + Agregar Nueva Intención
                                 </a>
                                 <a href="generar_pdf.php?fecha=2025-10-05" class="btn btn-secondary">
