@@ -14,6 +14,7 @@ class ServicioIntencion extends ServicioBase
     private $gestorPeticionMisa;
     private $gestorIntencion;
     private $gestorMisa;
+    public static $plantilla_nombre = "intenciones.docx";
 
     public function __construct(PDO $pdo)
     {
@@ -56,5 +57,11 @@ class ServicioIntencion extends ServicioBase
 
             return $resultado;
         }, "de registro o edicion de intencion");
+    }
+
+    public function generarPDF($misa_id)
+    {
+        error_log(print_r($this->gestorPeticionMisa->obtenerIntencionesDeMisaId(472), true));
+        return GeneradorPdf::guardarPDF(self::$plantilla_nombre, $this->toArrayParaConstanciaPDF());
     }
 }

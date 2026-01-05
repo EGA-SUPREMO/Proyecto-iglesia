@@ -29,6 +29,8 @@ abstract class GestorBase
                     return $stmt->fetchColumn();
                 case 'assoc':
                     return $stmt->fetch(PDO::FETCH_ASSOC);
+                case 'assoc_all':
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
                 case 'insert':
                     return (int)$this->pdo->lastInsertId();
                 case 'update':

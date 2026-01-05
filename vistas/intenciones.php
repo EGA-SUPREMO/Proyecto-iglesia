@@ -6,18 +6,19 @@
                     <div class="card-body p-4 p-md-5" id="contenedor-tabla">
                         <section>
                             <h1>Intenciones de Misa</h1>
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <h4 class="mb-2">Fecha de la misa:</h4>
-                                    <input type="date" name="fecha-misa" id="fecha-misa" class="form-control" value="2025-10-05" required>
+                            <form action="?c=intenciones&a=generarPDF&t=intencion" method="POST" autocomplete="off">
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h4 class="mb-2">Fecha de la misa:</h4>
+                                        <input type="date" name="fecha-misa" id="fecha-misa" class="form-control" value="2025-10-05" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4 class="mb-2">Selecciona la misa:</h4>
+                                        <select name="misa-id" id="misa-id" class="form-control" required>
+                                            <option value="1">3:30 pm</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <h4 class="mb-2">Selecciona la misa:</h4>
-                                    <select name="misa-id" id="misa-id" class="form-control" required>
-                                        <option value="1">3:30 pm</option>
-                                    </select>
-                                </div>
-                            </div>
                             <h2 class="subtitulo-intenciones">Acción de Gracias</h2>
 <ul class="lista-compacta">
     <li data-id="101">Familia Guzmán <a href="editar.php?id=101" class="btn-accion">✎</a> <a href="borrar.php?id=101" class="btn-accion">🗑️</a></li>
@@ -77,14 +78,15 @@
     <li data-id="419">Sebastián Alonso Díaz <a href="editar.php?id=419" class="btn-accion">✎</a> <a href="borrar.php?id=419" class="btn-accion">🗑️</a></li>
     <li data-id="420">La tía Elena Flores <a href="editar.php?id=420" class="btn-accion">✎</a> <a href="borrar.php?id=420" class="btn-accion">🗑️</a></li>
 </ul>
-                            <div class="btn-group">
-                                <a href="?c=intenciones&a=mostrar&t=intencion" class="btn btn-primary">
-                                    + Agregar Nueva Intención
-                                </a>
-                                <a href="generar_pdf.php?fecha=2025-10-05" class="btn btn-secondary">
-                                    Generar PDF 📄
-                                </a>
-                            </div>
+                                <div class="btn-group">
+                                    <a href="?c=intenciones&a=mostrar&t=intencion" class="btn btn-primary">
+                                        + Agregar Nueva Intención
+                                    </a>
+                                    <button type="submit" class="btn btn-secondary">
+                                        Generar PDF 📄
+                                    </button>
+                                </div>
+                            </form>
                         </section>
                     </div>
                 </section>

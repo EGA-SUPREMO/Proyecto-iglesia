@@ -30,6 +30,31 @@ class GestorPeticionMisa extends GestorBase
         return ($resultado['total'] > 0);
     }
 
+    public function obtenerIntencionesDeMisaId($misa_id)
+    {
+        $sql = "SELECT 
+                ti.nombre AS tipo_intencion,
+                op.nombre AS nombre_objeto
+            FROM 
+                peticion_misa pm
+                INNER JOIN peticiones p ON pm.peticion_id = p.id
+                INNER JOIN tipo_de_intencion ti ON p.tipo_de_intencion_id = ti.id
+                INNER JOIN objetos_de_peticion op ON p.objeto_de_peticion_id = op.id
+            WHERE 
+                pm.misa_id = :misa_id
+            ORDER BY 
+                ti.id ASC,
+                op.nombre ASC;";
+
+        $params = [
+            ':misa_id'   => $misa_id,
+        ];
+
+        $resultado = $this->hacerConsulta($sql, $params, 'assoc_all');
+
+        return $resultado;
+    }
+
     public function eliminarPorPeticionId($peticion_id)
     {
         $sql = "DELETE FROM {$this->tabla} WHERE peticion_id = ?";

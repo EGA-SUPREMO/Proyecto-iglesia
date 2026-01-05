@@ -77,4 +77,9 @@ class intencionesControlador extends formularioControlador
         $this->servicio->guardar($objeto, $id);
     }
 
+    public function generarPDF()
+    {
+        $this->servicio->generarPDF(472);
+    }
+
 }
