@@ -3,7 +3,6 @@
         <div class="row justify-content-center">
             <div class="col-lg-12 col-xl-12">
                 <section class="card shadow-lg rounded-4">
-                    <div id="error-message-container" style="display:none;"></div>
                     <div class="card-body p-4 p-md-5" id="contenedor-tabla">
                         <section>
                             <h1>Intenciones de Misa</h1>
@@ -97,6 +96,8 @@
     <script src="public/js/bootstrap.bundle.min.js"></script>
     <script src="public/js/sweetalert2.all.min.js"></script>
     <script src="public/js/validador.js"></script>
+    <script src="public/js/generadorFormulario.js"></script>
+    <script src="public/js/agenda.js"></script>
     <script src="public/js/mostrarError.js"></script>
 </body>
 
