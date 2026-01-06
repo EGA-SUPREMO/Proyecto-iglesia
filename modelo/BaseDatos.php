@@ -122,17 +122,9 @@ class BaseDatos
         ksort($sortedFiles); // Ordenar por la clave (timestamp) ascendente
 
         $filesToDeleteCount = count($sortedFiles) - $keepLimit;
-
-        error_log(print_r($sortedFiles, true));
-
         // Tomar los N archivos más antiguos (los primeros N del array ordenado)
         $filesToDelete = array_slice($sortedFiles, 0, $filesToDeleteCount);
 
-        error_log(print_r($files, true));
-        error_log(count($files));
-        error_log($keepLimit);
-        error_log("Archivos a eliminar (Cantidad: " . count($filesToDelete) . "):");
-        error_log(print_r($filesToDelete, true));
         foreach ($filesToDelete as $timestamp => $file) {
             error_log(print_r($file, true));
             if (unlink($file)) {
