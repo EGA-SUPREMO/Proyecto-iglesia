@@ -53,4 +53,93 @@ class BaseDatos
 
         return self::$pdoInstance;
     }
+
+    public static function hacerRespaldo($pdo, $backupDir)
+    {
+        if (!is_dir($backupDir)) {
+            if (!mkdir($backupDir, 0755, true)) {
+                error_log("Error: No se pudo crear el directorio de copias de seguridad: " . $backupDir);
+                return;
+            }
+        }
+
+        $currentDate = date("Y-m-d");
+        $todayFilePath = $backupDir . 'respaldo_base_de_datos_' . $currentDate . '.sql';
+
+        if (file_exists($todayFilePath)) {
+            error_log("Copia de seguridad ya existente para hoy, omitiendo la creación: " . $todayFilePath);
+            self::limpiarBackupsAntiguos($backupDir, 10);
+            return;
+        }
+
+        $output = "";
+        $tables = $pdo->query('SHOW TABLES')->fetchAll(PDO::FETCH_COLUMN);
+
+        foreach ($tables as $table) {
+            $createTable = $pdo->query("SHOW CREATE TABLE `$table`")->fetch(PDO::FETCH_ASSOC);
+            $output .= "\n-- Estructura para la tabla `$table`\n";
+            $output .= $createTable['Create Table'] . ";\n";
+
+            // 2. Obtener los datos de la tabla (INSERT INTO)
+            $output .= "\n-- Volcado de datos para la tabla `$table`\n";
+            $rows = $pdo->query("SELECT * FROM `$table`");
+
+            foreach ($rows as $row) {
+                $data = array_map(function ($value) use ($pdo) {
+                    if (isset($value)) {
+                        return $pdo->quote($value);
+                    }
+                    return 'NULL';
+                }, $row);
+
+                $output .= "INSERT INTO `$table` VALUES (" . implode(", ", $data) . ");\n";
+            }
+        }
+
+        if (file_put_contents($todayFilePath, $output) !== false) {
+            error_log("Copia de seguridad creada con éxito en: " . $todayFilePath);
+            self::limpiarBackupsAntiguos($backupDir, 10);
+            return;
+        }
+        error_log("Error al escribir el archivo de copia de seguridad.");
+    }
+
+    private static function limpiarBackupsAntiguos($backupDir, $keepLimit)
+    {
+        // Obtener todos los archivos que coincidan con el patrón 'respaldo_base_de_datos_YYYY-MM-DD.sql'
+        // Utilizamos GLOB_BRACE por si el nombre del archivo cambia, aunque el actual no lo usa.
+        $files = glob($backupDir . 'respaldo_base_de_datos_*.sql');
+        if (count($files) <= $keepLimit) {
+            return;
+        }
+
+        // Ordenar los archivos por fecha de modificación (la más antigua primero)
+        // filemtime() devuelve el timestamp de la última modificación
+        $sortedFiles = [];
+        foreach ($files as $file) {
+            $sortedFiles[filemtime($file)] = $file;
+        }
+        ksort($sortedFiles); // Ordenar por la clave (timestamp) ascendente
+
+        $filesToDeleteCount = count($sortedFiles) - $keepLimit;
+
+        error_log(print_r($sortedFiles, true));
+
+        // Tomar los N archivos más antiguos (los primeros N del array ordenado)
+        $filesToDelete = array_slice($sortedFiles, 0, $filesToDeleteCount);
+
+        error_log(print_r($files, true));
+        error_log(count($files));
+        error_log($keepLimit);
+        error_log("Archivos a eliminar (Cantidad: " . count($filesToDelete) . "):");
+        error_log(print_r($filesToDelete, true));
+        foreach ($filesToDelete as $timestamp => $file) {
+            error_log(print_r($file, true));
+            if (unlink($file)) {
+                error_log("Copia de seguridad antigua eliminada con éxito: " . basename($file) . " (Fecha: " . date("Y-m-d H:i:s", $timestamp) . ")");
+            } else {
+                error_log("Error al eliminar la copia de seguridad antigua: " . $file);
+            }
+        }
+    }
 }
