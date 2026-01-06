@@ -2,7 +2,7 @@
     const hoy = new Date().toISOString().slice(0, 10);
     const fechaEnNueveDias = (() => {
         const fecha = new Date();
-        fecha.setDate(fecha.getDate() + 9);
+        fecha.setDate(fecha.getDate() + 8);
         return fecha.toISOString().slice(0, 10);
     })();
     function getFormularioCampos(tipo, datosPHP) {
