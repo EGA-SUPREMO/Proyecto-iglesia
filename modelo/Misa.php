@@ -32,6 +32,11 @@ class Misa extends ModeloBase
 
     public function setFechaHora($fecha_hora)
     {
+        $dateTimeObj = DateTime::createFromFormat('Y-m-d\TH:i', $fecha_hora);
+        if ($dateTimeObj) {
+            $fecha_hora = $dateTimeObj->format('Y-m-d H:i:s');
+        }
+
         $fecha_actual_ayer = (new DateTime())->modify('-1 day')->format('Y-m-d H:i:s');
         $fecha_actual_uno_anno_despues = (new DateTime())->modify('+1 year')->format('Y-m-d H:i:s');
         $this->fecha_hora = Validador::validarFecha($fecha_hora, "fecha y hora de la misa", $fecha_actual_ayer, $fecha_actual_uno_anno_despues, 'Y-m-d H:i:s');

@@ -93,6 +93,15 @@ function validarFechaConstanciaSuceso($elemento) {
         mensaje
     );
 }
+function validarFechaHora($elemento) {
+    const fechaActual = new Date().toISOString().slice(0, 10);
+    const mensaje = `La fecha debe ser apartir de ${fechaActual}.`;
+    validarCampo(
+        $elemento,
+        (valor) => validarFecha(valor.slice(0, 10), fechaActual),
+        mensaje
+    );
+}
 
 function validarFechaExpedicion($elemento) {
      validarCampo(

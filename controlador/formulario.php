@@ -49,6 +49,19 @@
                     ] },
                 ];
             break;
+            case 'misa':
+                formularioCampos = [
+                    { type: 'datetime-local', name: 'fecha_hora', label: 'Fecha de la misa (No se permiten fechas duplicadas)', required: true, validarMetodo: 'validarFechaHora', value: datosPHP.fecha_hora 
+                        ? datosPHP.fecha_hora
+                            .replace(' ', 'T') 
+                            .slice(0, 16)
+                        : hoy + 'T17:00'},
+                    { type: 'select', name: 'permite_intenciones', label: '¿Esta misa permite registrar intenciones?', value: datosPHP.permite_intenciones, options: [
+                        { value: 1, text: 'Si'},
+                        { value: 0, text: 'No'},
+                    ] },
+                ];
+            break;
             case 'intencion':
                 formularioCampos = [
                     { type: 'fila', 
