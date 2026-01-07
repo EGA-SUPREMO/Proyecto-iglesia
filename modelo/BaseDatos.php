@@ -74,7 +74,6 @@ class BaseDatos
 
         $output = "";
         $tables = $pdo->query('SHOW TABLES')->fetchAll(PDO::FETCH_COLUMN);
-
         foreach ($tables as $table) {
             $createTable = $pdo->query("SHOW CREATE TABLE `$table`")->fetch(PDO::FETCH_ASSOC);
             $output .= "\n-- Estructura para la tabla `$table`\n";
@@ -82,7 +81,8 @@ class BaseDatos
 
             // 2. Obtener los datos de la tabla (INSERT INTO)
             $output .= "\n-- Volcado de datos para la tabla `$table`\n";
-            $rows = $pdo->query("SELECT * FROM `$table`");
+            $statement = $pdo->query("SELECT * FROM `$table`");
+            $rows = $statement->fetchAll(PDO::FETCH_NUM);
 
             foreach ($rows as $row) {
                 $data = array_map(function ($value) use ($pdo) {
