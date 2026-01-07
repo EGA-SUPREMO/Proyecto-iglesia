@@ -21,7 +21,7 @@ class GestionPeticionMisa
         if (isset($datos['metodo']) && $datos['metodo'] === 'consultarOCrearMisas') {
             $datos['fecha_fin'] = FuncionesComunes::limpiarString($datos['fecha_fin']);
             $datos['fecha_inicio'] = FuncionesComunes::limpiarString($datos['fecha_inicio']);
-            $datos['objeto_de_peticion_nombre'] = FuncionesComunes::limpiarString($datos['objeto_de_peticion_nombre']);
+            $datos['objeto_de_peticion_nombre'] = FuncionesComunes::limpiarString($datos['objeto_de_peticion_nombre'] ?? '');
 
             return $this->consultarOCrearMisas($datos);
         }
