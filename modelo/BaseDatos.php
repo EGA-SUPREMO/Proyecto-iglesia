@@ -67,24 +67,30 @@ class BaseDatos
         $todayFilePath = $backupDir . 'respaldo_base_de_datos_' . $currentDate . '.sql';
 
         if (file_exists($todayFilePath)) {
-            error_log("Copia de seguridad ya existente para hoy, omitiendo la creación: " . $todayFilePath);
+            error_log("Omitiendo la creación: " . $todayFilePath);
             self::limpiarBackupsAntiguos($backupDir, 10);
             return;
         }
+        $handle = fopen($todayFilePath, 'w+');
+        if (!$handle) {
+            error_log("Error: No se pudo abrir el archivo para escribir.");
+            return;
+        }
 
-        $output = "SET FOREIGN_KEY_CHECKS=0;\n";
-        $output .= "SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";\n";
-        $output .= "START TRANSACTION;\n";
-        $output .= "SET time_zone = \"+00:00\";\n\n";
+        fwrite($handle, "SET FOREIGN_KEY_CHECKS=0;\n");
+        fwrite($handle, "SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";\n");
+        fwrite($handle, "START TRANSACTION;\n");
+        fwrite($handle, "SET time_zone = \"+00:00\";\n\n");
 
         $tables = $pdo->query('SHOW TABLES')->fetchAll(PDO::FETCH_COLUMN);
         foreach ($tables as $table) {
             $createTable = $pdo->query("SHOW CREATE TABLE `$table`")->fetch(PDO::FETCH_ASSOC);
-            $output .= "\n-- Estructura para la tabla `$table`\n";
-            $output .= $createTable['Create Table'] . ";\n";
 
-            // 2. Obtener los datos de la tabla (INSERT INTO)
-            $output .= "\n-- Volcado de datos para la tabla `$table`\n";
+            fwrite($handle, "\n-- Estructura para la tabla `$table`\n");
+            fwrite($handle, "DROP TABLE IF EXISTS `$table`;\n");
+            fwrite($handle, $createTable['Create Table'] . ";\n");
+
+            fwrite($handle, "\n-- Datos de la tabla `$table`\n");
             $statement = $pdo->query("SELECT * FROM `$table`");
             $rows = $statement->fetchAll(PDO::FETCH_NUM);
 
@@ -96,19 +102,18 @@ class BaseDatos
                     return 'NULL';
                 }, $row);
 
-                $output .= "INSERT INTO `$table` VALUES (" . implode(", ", $data) . ");\n";
+                $line = "INSERT INTO `$table` VALUES (" . implode(", ", $data) . ");\n";
+                fwrite($handle, $line);
             }
         }
 
-        $output .= "\nSET FOREIGN_KEY_CHECKS=1;\n";
-        $output .= "COMMIT;\n";
+        fwrite($handle, "\nSET FOREIGN_KEY_CHECKS=1;\n");
+        fwrite($handle, "COMMIT;\n");
 
-        if (file_put_contents($todayFilePath, $output) !== false) {
-            error_log("Copia de seguridad creada con éxito en: " . $todayFilePath);
-            self::limpiarBackupsAntiguos($backupDir, 10);
-            return;
-        }
-        error_log("Error al escribir el archivo de copia de seguridad.");
+        fclose($handle);
+
+        error_log("Copia de seguridad creada con éxito en: " . $todayFilePath);
+        self::limpiarBackupsAntiguos($backupDir, 10);
     }
 
     private static function limpiarBackupsAntiguos($backupDir, $keepLimit)
