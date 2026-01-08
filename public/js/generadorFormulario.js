@@ -1269,8 +1269,14 @@ function generarFormulario(definicionFormulario, tituloFormulario) {
             return;
         }
         yaSeDecidioNoAutocompletar = false;
-        this.submit(); 
+        const $submitButton = $('button[type="submit"]');
+
+        if ($submitButton) {
+            $submitButton.prop('disabled', true);
+            $submitButton.text('Guardando...');
+        }
         
+        this.submit();
     });
 
     // 4. Ensamblar todo y añadirlo al DOM
