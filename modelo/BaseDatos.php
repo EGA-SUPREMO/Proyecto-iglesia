@@ -72,7 +72,11 @@ class BaseDatos
             return;
         }
 
-        $output = "";
+        $output = "SET FOREIGN_KEY_CHECKS=0;\n";
+        $output .= "SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";\n";
+        $output .= "START TRANSACTION;\n";
+        $output .= "SET time_zone = \"+00:00\";\n\n";
+
         $tables = $pdo->query('SHOW TABLES')->fetchAll(PDO::FETCH_COLUMN);
         foreach ($tables as $table) {
             $createTable = $pdo->query("SHOW CREATE TABLE `$table`")->fetch(PDO::FETCH_ASSOC);
@@ -95,6 +99,9 @@ class BaseDatos
                 $output .= "INSERT INTO `$table` VALUES (" . implode(", ", $data) . ");\n";
             }
         }
+
+        $output .= "\nSET FOREIGN_KEY_CHECKS=1;\n";
+        $output .= "COMMIT;\n";
 
         if (file_put_contents($todayFilePath, $output) !== false) {
             error_log("Copia de seguridad creada con éxito en: " . $todayFilePath);
