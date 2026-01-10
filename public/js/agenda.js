@@ -120,7 +120,7 @@ function mostrarIntenciones(resultado) {
         let itemHtml = `
             <li data-id="${idIntencion}">
                 ${textoIntencion} 
-                <a href="?c=intenciones&a=mostrar&t=intencion&id=${idIntencion}" class="btn-accion">✎</a> 
+                <button class="btn-accion" href="?c=intenciones&a=mostrar&t=intencion&id=${idIntencion}" class="btn-accion"> ✎ </button> 
                 <button class="btn-accion js-borrar" data-intencion-id="${idIntencion}">
                     🗑️
                 </button>
