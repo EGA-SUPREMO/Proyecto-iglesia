@@ -45,6 +45,13 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="col-sm-6">
+                            <a href="/iglesia/Documentacion/Manual de Usuario.pdf" class="card text-decoration-none text-dark h-100 lift-effect">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title mb-0">Manual de Usuario</h5>
+                                </div>
+                            </a>
+                        </div>
                         <div class="col-12 mt-4">
                             <a href="?c=login&a=cerrarSesion"  class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center"
                               onclick="javascript:return confirm('¿Seguro de salir?');">
