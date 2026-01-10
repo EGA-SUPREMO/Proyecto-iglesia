@@ -97,6 +97,10 @@ class ServicioIntencion extends ServicioBase
             $clave_normalizada = $mapa_traduccion[$tipo_intencion_original];
             $array_convertido[$clave_normalizada] = $lista_nombres;
         }
-        return $array_convertido;
+
+        $array_base_vacio = array_fill_keys(array_values($mapa_traduccion), '');
+        $array_final = array_merge($array_base_vacio, $array_convertido);
+
+        return $array_final;
     }
 }
