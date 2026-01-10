@@ -12,7 +12,54 @@ $(document).ready(function() {
     $inputFechaMisa.on('change', function() {
         cargarMisas($(this).val(), $selectMisaId);
     });
+    $selectMisaId.on('change', function() {
+        cargarIntenciones($(this).val());
+    });
 });
+
+function cargarIntenciones(misaId) {
+    if (!misaId) return;
+
+    let datos = {
+        'misa_id': misaId,
+        'metodo': 'obtenerIntencionesDeMisaId',
+    };
+
+    pedirDatos(JSON.stringify(datos), (resultado) => {
+        mostrarIntenciones(resultado);
+    }, "modelo/intenciones.php");
+}
+
+function mostrarIntenciones(resultado) {
+    let intenciones = (typeof resultado === 'string') ? JSON.parse(resultado) : resultado;
+
+    $('.lista-compacta').empty();
+
+    $.each(intenciones, function(i, item) {
+        let textoIntencion = item.lista_nombres; 
+        let categoria = item.tipo_intencion;
+        let idIntencion = item.id || 0; 
+        let itemHtml = `
+            <li data-id="${idIntencion}">
+                ${textoIntencion} 
+                <a href="?c=intenciones&a=mostrar&t=intencion&id=${idIntencion}" class="btn-accion">✎</a> 
+                <a href="borrar.php?id=${idIntencion}" class="btn-accion">🗑️</a>
+                <form action="?c=panel&a=intenciones&t=intencion" method="POST" onsubmit="return confirm('¿Seguro de eliminar?');">
+                    <input type="hidden" name="id" value="${idIntencion}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">
+                        🗑️
+                    </button>
+                </form>
+            </li>
+        `;
+        let $header = $('.subtitulo-intenciones').filter(function() {
+            return $(this).text().trim() === categoria; 
+        });
+        
+        $header.next('.lista-compacta').append(itemHtml);
+    });
+}
 
 function obtenerFechaActualFormatoISO() {
     const ahora = new Date();
@@ -41,7 +88,10 @@ function cargarMisas(fecha, $selectMisaId) {
     
     pedirDatos(JSON.stringify(datos), (resultado) => {
         manejarRespuestaMisasAgenda(resultado, $selectMisaId);
+        let idSeleccionado = $selectMisaId.val();
+        cargarIntenciones(idSeleccionado);
     }, "modelo/intenciones.php");
+
 }
 
 /**

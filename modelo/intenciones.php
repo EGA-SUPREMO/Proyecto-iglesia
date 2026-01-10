@@ -24,6 +24,10 @@ class GestionPeticionMisa
             $datos['objeto_de_peticion_nombre'] = FuncionesComunes::limpiarString($datos['objeto_de_peticion_nombre'] ?? '');
 
             return $this->consultarOCrearMisas($datos);
+        } elseif (isset($datos['metodo']) && $datos['metodo'] === 'obtenerIntencionesDeMisaId') {
+            $gestorPeticionMisa = EntidadFactory::crearGestor($this->pdo, 'peticion_misa');
+
+            return $gestorPeticionMisa->obtenerIntencionesDeMisaId($datos['misa_id'], false);
         }
     }
 

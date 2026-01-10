@@ -30,11 +30,28 @@ class GestorPeticionMisa extends GestorBase
         return ($resultado['total'] > 0);
     }
 
-    public function obtenerIntencionesDeMisaId($misa_id)
+    public function obtenerIntencionesDeMisaId($misa_id, $agrupar = true)
     {
-        $sql = "SELECT 
-                ti.nombre AS tipo_intencion,
-                GROUP_CONCAT(op.nombre ORDER BY op.nombre ASC SEPARATOR ' - ') AS lista_nombres
+        $selectFields = "
+            ti.nombre AS tipo_intencion,
+            op.nombre AS lista_nombres, p.id AS id
+        ";
+
+        $groupBy = "";
+        $groupConcatSelect = "";
+
+        if ($agrupar) {
+            $groupConcatSelect = "GROUP_CONCAT(op.nombre ORDER BY op.nombre ASC SEPARATOR ' - ') AS lista_nombres";
+            $groupBy = "GROUP BY ti.id, ti.nombre";
+
+            // Reemplazar el campo base simple por la agregación
+            $selectFields = str_replace(
+                "op.nombre AS lista_nombres, p.id AS id",
+                $groupConcatSelect,
+                $selectFields
+            );
+        }
+        $sql = "SELECT " . trim($selectFields) . "
             FROM 
                 peticion_misa pm
                 INNER JOIN peticiones p ON pm.peticion_id = p.id
@@ -42,8 +59,7 @@ class GestorPeticionMisa extends GestorBase
                 INNER JOIN objetos_de_peticion op ON p.objeto_de_peticion_id = op.id
             WHERE 
                 pm.misa_id = :misa_id
-            GROUP BY 
-                ti.id, ti.nombre
+            " . $groupBy. "
             ORDER BY 
                 ti.id ASC;";
 
@@ -52,7 +68,6 @@ class GestorPeticionMisa extends GestorBase
         ];
 
         $resultado = $this->hacerConsulta($sql, $params, 'assoc_all');
-
         return $resultado;
     }
 

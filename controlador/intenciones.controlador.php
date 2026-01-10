@@ -85,4 +85,16 @@ class intencionesControlador extends formularioControlador
         FuncionesComunes::redirigir('Location: ' . $rutaPdf);
     }
 
+    public function eliminar()
+    {
+        try {// todo distinguir si es solo eliminar para esta misa o eliminar esta peticion complematement
+            $this->gestor->eliminar($_POST[$this->gestor->getClavePrimaria()]);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            $errorMessage = $e->getMessage();
+            FuncionesComunes::redirigir('Location:?c=panel&a=intenciones&t='.$this->nombreTabla.'&error=' . urlencode($errorMessage));
+        }
+        FuncionesComunes::redirigir('Location:?c=panel&a=intenciones&t='.$this->nombreTabla);
+    }
+
 }
