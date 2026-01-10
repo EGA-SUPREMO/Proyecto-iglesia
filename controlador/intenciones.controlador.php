@@ -8,6 +8,7 @@ class intencionesControlador extends formularioControlador
 {
     private $servicio;
     private $gestorObjetoDePeticion;
+    private $gestorPeticionMisa;
 
     public function __construct(PDO $pdo)
     {
@@ -18,6 +19,7 @@ class intencionesControlador extends formularioControlador
         }
         $this->servicio = EntidadFactory::crearServicio($pdo, $this->nombreTabla);
         $this->gestorObjetoDePeticion = EntidadFactory::crearGestor($pdo, 'objeto_de_peticion');
+        $this->gestorPeticionMisa = EntidadFactory::crearGestor($pdo, 'peticion_misa');
     }
 
     public function mostrar()
@@ -87,8 +89,12 @@ class intencionesControlador extends formularioControlador
 
     public function eliminar()
     {
-        try {// todo distinguir si es solo eliminar para esta misa o eliminar esta peticion complematement
-            $this->gestor->eliminar($_POST[$this->gestor->getClavePrimaria()]);
+        try {
+            if ($_POST['alcance_borrado'] == 'local') {
+                $this->gestorPeticionMisa->eliminarPorPeticionIdYMisaId($_POST['id'], $_POST['misa_id']);
+            } elseif ($_POST['alcance_borrado'] == 'global') {
+                $this->gestor->eliminar($_POST[$this->gestor->getClavePrimaria()]);
+            }
         } catch (Exception $e) {
             error_log($e->getMessage());
             $errorMessage = $e->getMessage();

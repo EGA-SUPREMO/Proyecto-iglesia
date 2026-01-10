@@ -76,4 +76,13 @@ class GestorPeticionMisa extends GestorBase
         $sql = "DELETE FROM {$this->tabla} WHERE peticion_id = ?";
         return $this->hacerConsulta($sql, [$peticion_id], 'execute');
     }
+    public function eliminarPorPeticionIdYMisaId($peticion_id, $misa_id)
+    {
+        $sql = "DELETE FROM {$this->tabla} WHERE peticion_id = :peticion_id AND misa_id = :misa_id";
+        $params = [
+            ':misa_id'   => $misa_id,
+            ':peticion_id'   => $peticion_id,
+        ];
+        return $this->hacerConsulta($sql, $params, 'execute');
+    }
 }

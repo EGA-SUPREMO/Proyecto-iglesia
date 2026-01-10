@@ -30,6 +30,84 @@ function cargarIntenciones(misaId) {
     }, "modelo/intenciones.php");
 }
 
+// Variable global para el ID de la Misa (asumiendo que $selectMisaId.val() lo contiene)
+// Si no la tienes, debes obtenerla de alguna manera (p. ej., leer el valor del select).
+const $selectMisaId = $('#misa-id');
+
+function configurarListenerBorrado() {
+    $('.js-borrar').off('click').on('click', function(e) {
+        e.preventDefault();
+        const idIntencion = $(this).data('intencion-id');
+        preguntarBorrado(idIntencion);
+    });
+}
+
+function preguntarBorrado(idIntencion) {
+    Swal.fire({
+        title: 'Seleccione el alcance del borrado',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Borrar para TODAS las misas',
+        cancelButtonText: 'Borrar SOLO para esta misa',
+        showDenyButton: true,
+        denyButtonText: 'Cancelar',
+        focusCancel: true,
+        customClass: {
+            confirmButton: 'swal2-confirm',
+            denyButton: 'swal2-deny',
+            cancelButton: 'swal2-cancel'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: '¿Confirmas la eliminación global?',
+                text: 'Esta intención se eliminará de forma permanente de TODAS las misas futuras y pasadas.',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, borrar globalmente',
+                cancelButtonText: 'No, cancelar'
+            }).then((resultConfirm) => {
+                if (resultConfirm.isConfirmed) {
+                    enviarFormularioBorrado(idIntencion, 'global');
+                }
+            });
+
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            enviarFormularioBorrado(idIntencion, 'local');
+            
+        } else if (result.isDenied) {
+            Swal.fire('Cancelado', 'La intención no ha sido modificada.', 'info');
+        }
+    });
+}
+
+/**
+ * Crea un formulario dinámico y lo envía para realizar la acción DELETE.
+ * @param {string|number} idIntencion - El ID de la intención a borrar.
+ * @param {string} alcance - 'local' (solo esta misa) o 'global' (todas las misas).
+ */
+function enviarFormularioBorrado(idIntencion, alcance) {
+    const misaId = $selectMisaId.val();
+
+    const $form = $('<form>', {
+        action: '?c=intenciones&a=eliminar&t=intencion',
+        method: 'POST',
+        style: 'display:none;'
+    });
+    
+    $form.append($('<input>', { type: 'hidden', name: 'id', value: idIntencion }));
+    $form.append($('<input>', { type: 'hidden', name: '_method', value: 'DELETE' }));
+    $form.append($('<input>', { type: 'hidden', name: 'alcance_borrado', value: alcance }));
+    if (alcance === 'local') {
+        $form.append($('<input>', { type: 'hidden', name: 'misa_id', value: misaId }));
+    }
+
+    $('body').append($form);
+    $form.submit();
+}
+
 function mostrarIntenciones(resultado) {
     let intenciones = (typeof resultado === 'string') ? JSON.parse(resultado) : resultado;
 
@@ -43,14 +121,9 @@ function mostrarIntenciones(resultado) {
             <li data-id="${idIntencion}">
                 ${textoIntencion} 
                 <a href="?c=intenciones&a=mostrar&t=intencion&id=${idIntencion}" class="btn-accion">✎</a> 
-                <a href="borrar.php?id=${idIntencion}" class="btn-accion">🗑️</a>
-                <form action="?c=panel&a=intenciones&t=intencion" method="POST" onsubmit="return confirm('¿Seguro de eliminar?');">
-                    <input type="hidden" name="id" value="${idIntencion}">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit">
-                        🗑️
-                    </button>
-                </form>
+                <button class="btn-accion js-borrar" data-intencion-id="${idIntencion}">
+                    🗑️
+                </button>
             </li>
         `;
         let $header = $('.subtitulo-intenciones').filter(function() {
@@ -59,6 +132,7 @@ function mostrarIntenciones(resultado) {
         
         $header.next('.lista-compacta').append(itemHtml);
     });
+    configurarListenerBorrado();
 }
 
 function obtenerFechaActualFormatoISO() {
