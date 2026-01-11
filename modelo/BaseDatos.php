@@ -68,7 +68,7 @@ class BaseDatos
 
         if (file_exists($todayFilePath)) {
             error_log("Omitiendo la creación: " . $todayFilePath);
-            self::limpiarBackupsAntiguos($backupDir, 10);
+            self::limpiarBackupsAntiguos($backupDir, 30);
             return;
         }
         $handle = fopen($todayFilePath, 'w+');
@@ -113,7 +113,7 @@ class BaseDatos
         fclose($handle);
 
         error_log("Copia de seguridad creada con éxito en: " . $todayFilePath);
-        self::limpiarBackupsAntiguos($backupDir, 10);
+        self::limpiarBackupsAntiguos($backupDir, 30);
     }
 
     private static function limpiarBackupsAntiguos($backupDir, $keepLimit)
