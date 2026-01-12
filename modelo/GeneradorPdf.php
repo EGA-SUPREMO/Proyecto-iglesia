@@ -147,12 +147,12 @@ class GeneradorPdf
 
         // Detectar sistema operativo
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            try {
-                self::convertirDocxAPdfConWord($ruta_docx, $salida);
-            } catch (Exception $e) {
-                error_log($e->getMessage());
-                self::convertirDocxAPdfConLibreOfficeEnWindows($ruta_docx, $salida);
-            }
+            //try {
+            //    self::convertirDocxAPdfConWord($ruta_docx, $salida);
+            //} catch (Exception $e) {
+            //    error_log($e->getMessage());
+            self::convertirDocxAPdfConLibreOfficeEnWindows($ruta_docx, $salida);
+            //}
         } else {
             // Linux
             // Usamos un directorio temporal como HOME para evitar problemas de permisos
