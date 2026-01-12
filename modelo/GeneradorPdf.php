@@ -46,7 +46,7 @@ class GeneradorPdf
         return FuncionesComunes::rutaDocumentoAUrl($rutaAbsolutaDocumentoPdf);
     }
 
-    public function convertirDocxAPdfEnWindows($ruta_docx, $salida)
+    public static function convertirDocxAPdfConLibreOfficeEnWindows($ruta_docx, $salida)
     {
         $candidatos = [
             'soffice', // Intento 1: Asumir que está en las variables de entorno (PATH)
@@ -100,6 +100,45 @@ class GeneradorPdf
         }
     }
 
+    public static function convertirDocxAPdfConWord($ruta_docx, $salida_directorio)
+    {
+        // 1. Validar rutas absolutas (Word COM las requiere)
+        $ruta_docx = realpath($ruta_docx);
+        if (!$ruta_docx) {
+            throw new \Exception("El archivo de origen no existe.");
+        }
+
+        // Definir nombre de salida (Word guarda con el mismo nombre pero .pdf)
+        $nombre_archivo = pathinfo($ruta_docx, PATHINFO_FILENAME);
+        $ruta_pdf_final = rtrim($salida_directorio, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $nombre_archivo . ".pdf";
+
+        try {
+            // 2. Crear la instancia de Word
+            // 0 = Invisible para el usuario
+            $word = new \COM("Word.Application") or die("No se pudo instanciar Word");
+            $word->Visible = 0;
+            $word->DisplayAlerts = 0;
+
+            $word->Documents->Open($ruta_docx);
+
+            // El número 17 corresponde a la constante 'wdExportFormatPDF'
+            $word->ActiveDocument->ExportAsFixedFormat($ruta_pdf_final, 17);
+
+            // 5. Cerrar sin guardar cambios y salir
+            $word->ActiveDocument->Close(false);
+            $word->Quit();
+
+            $word = null;
+
+            return $ruta_pdf_final;
+        } catch (\Exception $e) {
+            if (isset($word)) {
+                $word->Quit();
+            }
+            throw new \Exception("Error con Word COM: " . $e->getMessage());
+        }
+    }
+
     public static function convertirDocxAPdf($ruta_docx)
     {
         $ruta_pdf = str_replace('.docx', '.pdf', $ruta_docx);
@@ -108,9 +147,12 @@ class GeneradorPdf
 
         // Detectar sistema operativo
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            /*$comando = 'soffice --headless --convert-to pdf "' . $ruta_docx . '" --outdir "' . $salida . '"';
-            $comando = 'C:\Program Files\LibreOffice\program\soffice.exe --headless --convert-to pdf "' . $ruta_docx . '" --outdir "' . $salida . '"';*/
-            self::convertirDocxAPdfEnWindows($ruta_docx, $salida);
+            try {
+                self::convertirDocxAPdfConWord($ruta_docx, $salida);
+            } catch (Exception $e) {
+                error_log($e->getMessage());
+                self::convertirDocxAPdfConLibreOfficeEnWindows($ruta_docx, $salida);
+            }
         } else {
             // Linux
             // Usamos un directorio temporal como HOME para evitar problemas de permisos
