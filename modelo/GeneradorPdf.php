@@ -37,8 +37,69 @@ class GeneradorPdf
     public static function guardarPDF($nombre_plantilla, $datos)
     {
         $rutaAbsolutaDocumentoDocx = self::generarDocumento($nombre_plantilla, $datos);
-        $rutaAbsolutaDocumentoPdf = self::convertirDocxAPdf($rutaAbsolutaDocumentoDocx);
+        try {
+            $rutaAbsolutaDocumentoPdf = self::convertirDocxAPdf($rutaAbsolutaDocumentoDocx);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            $rutaAbsolutaDocumentoPdf = $rutaAbsolutaDocumentoDocx;
+        }
         return FuncionesComunes::rutaDocumentoAUrl($rutaAbsolutaDocumentoPdf);
+    }
+
+    public function convertirDocxAPdfEnWindows($ruta_docx, $salida)
+    {
+        $candidatos = [
+            'soffice', // Intento 1: Asumir que está en las variables de entorno (PATH)
+            'C:\Program Files\LibreOffice\program\soffice.exe', // Intento 2: Ruta estándar 64-bit
+            'C:\Program Files (x86)\LibreOffice\program\soffice.exe', // Intento 3: Ruta estándar 32-bit
+            'C:\Program Files\OpenOffice\program\soffice.exe', // 4. Estándar OpenOffice 64-bit
+            'C:\Program Files (x86)\OpenOffice\program\soffice.exe', // 5. Estándar OpenOffice 32-bit
+        ];
+        $errores = [];
+        $convertido = false;
+
+        foreach ($candidatos as $ejecutable) {
+            $existe = false;
+
+            if ($ejecutable === 'soffice') {
+                exec('where soffice 2>NUL', $output_check, $return_check);
+                if ($return_check === 0) {
+                    $existe = true;
+                }
+            } else {
+                if (file_exists($ejecutable)) {
+                    $existe = true;
+                }
+            }
+
+            if ($existe) {
+                $cmd_ejecutable = ($ejecutable === 'soffice') ? 'soffice' : '"' . $ejecutable . '"';
+
+                $comando = $cmd_ejecutable . ' --headless --convert-to pdf "' . $ruta_docx . '" --outdir "' . $salida . '"';
+
+                $output = [];
+                $return_var = -1;
+
+                exec($comando . " 2>&1", $output, $return_var);
+
+                if ($return_var === 0) {
+                    $convertido = true;
+                    break; // ¡Éxito! Salimos del bucle
+                } else {
+                    $errores[] = "Fallo con ($ejecutable): " . implode("\n", $output);
+                }
+            } else {
+                continue;
+            }
+        }
+
+        if (!$convertido) {
+            $msj_error = empty($errores)
+                ? "No se encontró LibreOffice en ninguna de las rutas esperadas (PATH, Program Files, x86)."
+                : implode("\n -- \n", $errores);
+
+            throw new \Exception("Error fatal en conversión .docx a PDF en Windows: " . $msj_error);
+        }
     }
 
     public static function convertirDocxAPdf($ruta_docx)
@@ -49,11 +110,9 @@ class GeneradorPdf
 
         // Detectar sistema operativo
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            // Windows
-            // En Windows el comando es soffice.exe, que suele estar en:
-            // C:\Program Files\LibreOffice\program\soffice.exe
-            // OJO: asegúrate de que esté en el PATH, si no, pon la ruta completa. "C:\Program Files\LibreOffice\program\soffice.exe"
-            $comando = 'soffice --headless --convert-to pdf "' . $ruta_docx . '" --outdir "' . $salida . '"';
+            /*$comando = 'soffice --headless --convert-to pdf "' . $ruta_docx . '" --outdir "' . $salida . '"';
+            $comando = 'C:\Program Files\LibreOffice\program\soffice.exe --headless --convert-to pdf "' . $ruta_docx . '" --outdir "' . $salida . '"';*/
+            self::convertirDocxAPdfEnWindows($ruta_docx, $salida);
         } else {
             // Linux
             // Usamos un directorio temporal como HOME para evitar problemas de permisos
@@ -62,14 +121,34 @@ class GeneradorPdf
                 mkdir($lo_profile, 0755, true);
             }
             $comando = 'export HOME="' . $lo_profile . '" && libreoffice --headless --convert-to pdf "' . $ruta_docx . '" --outdir "' . $salida . '"';
-        }
-        exec($comando . " 2>&1", $output, $return_var);
+            exec($comando . " 2>&1", $output, $return_var);
 
-        if ($return_var !== 0) {
-            throw new \Exception("Error al convertir DOCX a PDF: " . implode("\n", $output));
+            if ($return_var !== 0) {
+                throw new \Exception("Error al convertir DOCX a PDF: " . implode("\n", $output));
+            }
         }
 
         return $ruta_pdf;
+    }
+
+    public static function ImprimirDocxDirectamente($rutaAbsolutaDocumentoDocx)
+    {
+        $cleanPath = realpath($rutaAbsolutaDocumentoDocx);
+
+        if ($cleanPath) {
+            $cmd = "powershell -Command \"Start-Process -FilePath '$cleanPath' -Verb Print\"";
+
+            // 3. Execute the command
+            // The ignored output is to prevent the script from hanging waiting for a response
+            pclose(popen("start /B " . $cmd, "r"));
+
+            // Alternative simple version (try this if the above popen looks complex):
+            // exec($cmd);
+
+            error_log("Documento enviado a la impresora!");
+        } else {
+            throw new \Exception("Error: Archivo no encontrado: " . $rutaAbsolutaDocumentoDocx);
+        }
     }
 
 }
