@@ -60,37 +60,35 @@ class GeneradorPdf
 
         foreach ($candidatos as $ejecutable) {
             $existe = false;
-
             if ($ejecutable === 'soffice') {
-                exec('where soffice 2>NUL', $output_check, $return_check);
-                if ($return_check === 0) {
-                    $existe = true;
-                }
+                exec('where soffice 2>NUL', $output, $return);
+                $existe = ($return === 0);
             } else {
-                if (file_exists($ejecutable)) {
-                    $existe = true;
-                }
+                $existe = file_exists($ejecutable);
             }
 
-            if ($existe) {
-                $cmd_ejecutable = ($ejecutable === 'soffice') ? 'soffice' : '"' . $ejecutable . '"';
-
-                $comando = $cmd_ejecutable . ' --headless --convert-to pdf "' . $ruta_docx . '" --outdir "' . $salida . '"';
-
-                $output = [];
-                $return_var = -1;
-
-                exec($comando . " 2>&1", $output, $return_var);
-
-                if ($return_var === 0) {
-                    $convertido = true;
-                    break; // ¡Éxito! Salimos del bucle
-                } else {
-                    $errores[] = "Fallo con ($ejecutable): " . implode("\n", $output);
-                }
-            } else {
+            if (!$existe) {
                 continue;
             }
+            $exe_path = ($ejecutable === 'soffice') ? 'soffice' : "\"$ejecutable\"";
+
+            $docx_esc = escapeshellarg($ruta_docx);
+            $out_esc = escapeshellarg($salida);
+
+            // A partir de aquí, sabemos que el ejecutable existe
+            $comando = "$exe_path --headless --convert-to pdf $docx_esc --outdir $out_esc";
+
+            $output = [];
+            $return_var = -1;
+
+            exec($comando . " 2>&1", $output, $return_var);
+
+            if ($return_var === 0) {
+                $convertido = true;
+                break;
+            }
+
+            $errores[] = "Fallo con ($ejecutable): " . implode("\n", $output);
         }
 
         if (!$convertido) {
