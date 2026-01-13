@@ -56,6 +56,8 @@ class BaseDatos
 
     public static function hacerRespaldo($pdo, $backupDir)
     {
+        $backupDir = rtrim($backupDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
         if (!is_dir($backupDir)) {
             if (!mkdir($backupDir, 0755, true)) {
                 error_log("Error: No se pudo crear el directorio de copias de seguridad: " . $backupDir);

@@ -59,16 +59,18 @@ class FuncionesComunes
     }
     public static function rutaDocumentoAUrl($rutaAbsoluta)
     {
-        $rutaRaizServidor = $_SERVER['DOCUMENT_ROOT'];
+        $rutaRaizServidor = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
         $rutaNormalizada = realpath($rutaAbsoluta);
 
         if ($rutaNormalizada === false) {
-            throw new Exception("Error: ruta no existe");
+            throw new Exception("Error: La ruta física no existe: " . $rutaAbsoluta);
         }
 
+        $rutaNormalizada = str_replace('\\', '/', $rutaNormalizada);
         $rutaRelativa = str_replace($rutaRaizServidor, '', $rutaNormalizada);
 
-        $rutaFinal = '//' . $_SERVER['HTTP_HOST'] . $rutaRelativa;
+        $urlBase = $_SERVER['HTTP_HOST'];
+        $rutaFinal = '//' . $urlBase . '/' . ltrim($rutaRelativa, '/');
 
         return $rutaFinal;
     }
