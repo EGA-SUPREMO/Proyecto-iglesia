@@ -42,7 +42,7 @@ foreach ($extensiones as $ext) {
         echo "<li>Extensión <strong>$ext</strong>: <span class='ok'>INSTALADA (OK)</span></li>";
     } else {
         echo "<li>Extensión <strong>$ext</strong>: <span class='fail'>FALTA HABILITAR EN PHP.INI (CRÍTICO)</span></li>";
-        echo "<small> -> Sin 'zip', PhpWord NO funcionará y no mostrará error.</small><br>";
+        echo "<small> -> Nota: Sin 'zip', PhpWord NO funcionará y no mostrará error.</small><br>";
     }
 }
 echo "</ul></div>";
