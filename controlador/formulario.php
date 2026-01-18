@@ -5,6 +5,75 @@
         fecha.setDate(fecha.getDate() + 8);
         return fecha.toISOString().slice(0, 10);
     })();
+    const paises = [
+      "Antigua y Barbuda", "Argentina", "Bahamas", "Barbados", "Belice", 
+      "Bolivia", "Brasil", "Canadá", "Chile", "Colombia", 
+      "Costa Rica", "Cuba", "Dominica", "Ecuador", "El Salvador", 
+      "Estados Unidos", "Granada", "Guatemala", "Guyana", "Haití", 
+      "Honduras", "Jamaica", "México", "Nicaragua", "Panamá", 
+      "Paraguay", "Perú", "República Dominicana", 
+      "San Vicente y las Granadinas", "Santa Lucía", "Surinam", 
+      "Trinidad y Tobago", "Uruguay", "Venezuela",
+      // Europa
+      "Albania", "Alemania", "Andorra", "Austria", "Bélgica", 
+      "Bielorrusia", "Bosnia y Herzegovina", "Bulgaria", "Chipre", 
+      "Ciudad del Vaticano", "Croacia", "Dinamarca", "Eslovaquia", 
+      "Eslovenia", "España", "Estonia", "Finlandia", "Francia", 
+      "Grecia", "Hungría", "Irlanda", "Islandia", "Italia", 
+      "Letonia", "Liechtenstein", "Lituania", "Luxemburgo", 
+      "Macedonia del Norte", "Malta", "Moldavia", "Mónaco", 
+      "Montenegro", "Noruega", "Países Bajos", "Polonia", 
+      "Portugal", "Reino Unido", "República Checa", "Rumania", 
+      "Rusia", "San Marino", "Serbia", "Suecia", "Suiza", 
+      "Ucrania",
+      // Otros
+      "China", "Japón", "Australia"
+    ];
+    const estadosVenezuela = [
+      "Amazonas", "Anzoátegui", "Apure", "Aragua", "Barinas", 
+      "Bolívar", "Carabobo", "Cojedes", "Delta Amacuro", "Dependencias Federales",
+      "Distrito Capital", "Falcón", "Guárico", "Lara", "Mérida", 
+      "Miranda", "Monagas", "Nueva Esparta", "Portuguesa", "Sucre", 
+      "Táchira", "Trujillo", "La Guaira", "Yaracuy", "Zulia"
+    ];
+    const municipiosCarabobo = [
+      "Bejuma",
+      "Carlos Arvelo",
+      "Diego Ibarra",
+      "Guacara",
+      "Juan José Mora",
+      "Libertador",
+      "Los Guayos",
+      "Miranda",
+      "Montalbán",
+      "Naguanagua",
+      "Puerto Cabello",
+      "San Diego",
+      "San Joaquín",
+      "Valencia"
+    ];
+    const ciudadesCarabobo = [
+      "Bejuma",
+      "Belén",
+      "Canoabo",
+      "Central Tacarigua",
+      "Chirgua",
+      "Ciudad Alianza",
+      "Guacara",
+      "Güigüe",
+      "Los Guayos",
+      "Mariara",
+      "Miranda",
+      "Montalbán",
+      "Morón",
+      "Naguanagua",
+      "Puerto Cabello",
+      "San Diego",
+      "San Joaquín",
+      "Tocuyito",
+      "Valencia",
+      "Vigirima"
+    ];
     function getFormularioCampos(tipo, datosPHP) {
         //console.log(datosPHP);
         let formularioCampos;
@@ -117,11 +186,11 @@
                     { type: 'subtitulo', name: 'subtitulo-lugar-nacimiento', value: 'Lugar de Nacimiento'},
                     { type: 'fila', 
                         campos: [
-                            { type: 'text', name: 'pais', label: 'País', required: false, validarMetodo: 'validarLugar', value: datosPHP.pais },
-                            { type: 'text', name: 'estado', label: 'Estado', required: false, validarMetodo: 'validarLugar', value: datosPHP.estado },
-                            { type: 'text', name: 'localidad', label: 'Ciudad', required: false, validarMetodo: 'validarLugar', value: datosPHP.localidad },
-                            { type: 'text', name: 'municipio', label: 'Municipio', required: false, validarMetodo: 'validarLugar', value: datosPHP.municipio },
-                        ] 
+                            { type: 'autocomplete', name: 'pais', label: 'País', sugerencias: paises, required: false, validarMetodo: 'validarLugar', value: datosPHP.pais },
+                            { type: 'autocomplete', name: 'estado', label: 'Estado', sugerencias: estadosVenezuela, required: false, validarMetodo: 'validarLugar', value: datosPHP.estado },
+                            { type: 'autocomplete', name: 'localidad', label: 'Ciudad', sugerencias: ciudadesCarabobo, required: false, validarMetodo: 'validarLugar', value: datosPHP.localidad },
+                            { type: 'autocomplete', name: 'municipio', label: 'Municipio', sugerencias: municipiosCarabobo, required: false, validarMetodo: 'validarLugar', value: datosPHP.municipio },
+                        ]
                     },
                 ];
             break;
@@ -195,9 +264,9 @@
                 { type: 'subtitulo', name: 'subtitulo-lugar-nacimiento', value: 'Lugar de Nacimiento del Bautizado'},
                     { type: 'fila', 
                         campos: [
-                            { type: 'text', name: 'feligres-pais', label: 'País', required: true, validarMetodo: 'validarLugar', value: datosPHP.feligres?.pais ?? '' },
-                            { type: 'text', name: 'feligres-estado', label: 'Estado', required: true, validarMetodo: 'validarLugar', value: datosPHP.feligres?.estado ?? '' },
-                            { type: 'text', name: 'feligres-municipio', label: 'Municipio', required: true, validarMetodo: 'validarLugar', value: datosPHP.feligres?.municipio ?? '' },
+                            { type: 'autocomplete', name: 'feligres-pais', label: 'País', sugerencias: paises, required: true, validarMetodo: 'validarLugar', value: datosPHP.feligres?.pais ?? '' },
+                            { type: 'autocomplete', name: 'feligres-estado', label: 'Estado', sugerencias: estadosVenezuela, required: true, validarMetodo: 'validarLugar', value: datosPHP.feligres?.estado ?? '' },
+                            { type: 'autocomplete', name: 'feligres-municipio', label: 'Municipio', sugerencias: municipiosCarabobo, required: true, validarMetodo: 'validarLugar', value: datosPHP.feligres?.municipio ?? '' },
                         ] 
                     },
 
@@ -284,7 +353,7 @@
                         { type: 'text', name: 'contrayente_1-segundo_apellido', label: 'Segundo Apellido', required: false, validarMetodo: 'validarNombre', value: datosPHP.contrayente_1?.segundo_apellido ?? '' },
                     ] 
                 },
-                { type: 'text', name: 'contrayente_1-localidad', label: 'Natural de (Ciudad):', required: true, validarMetodo: 'validarLugar', value: datosPHP.contrayente_1?.localidad ?? '' },
+                { type: 'autocomplete', name: 'contrayente_1-localidad', label: 'Natural de (Ciudad):', sugerencias: ciudadesCarabobo, required: true, validarMetodo: 'validarLugar', value: datosPHP.contrayente_1?.localidad ?? '' },
 
                 { type: 'subtitulo', name: 'subtitulo-contrayente_2-datos', value: 'Datos del Contrayente 2 (C.I. )'},
                 { type: 'fila', 
@@ -299,7 +368,7 @@
                         { type: 'text', name: 'contrayente_2-segundo_apellido', label: 'Segundo Apellido', required: false, validarMetodo: 'validarNombre', value: datosPHP.contrayente_2?.segundo_apellido ?? '' },
                     ] 
                 },
-                { type: 'text', name: 'contrayente_2-localidad', label: 'Natural de (Ciudad):', required: true, validarMetodo: 'validarLugar', value: datosPHP.contrayente_2?.localidad ?? '' },
+                { type: 'autocomplete', name: 'contrayente_2-localidad', label: 'Natural de (Ciudad):', sugerencias: ciudadesCarabobo, required: true, validarMetodo: 'validarLugar', value: datosPHP.contrayente_2?.localidad ?? '' },
 
                 { type: 'subtitulo', name: 'subtitulo-matrimonio-datos', value: 'Datos del Matrimonio'},
                 { type: 'text', name: 'constancia-testigo_1_nombre', label: 'Nombre Completo del Testigo 1', required: true, validarMetodo: 'validarNombrePadrino', value: datosPHP.testigo_1_nombre },
