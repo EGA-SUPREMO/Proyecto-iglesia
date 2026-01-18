@@ -120,10 +120,8 @@ function mostrarIntenciones(resultado) {
         let itemHtml = `
             <li data-id="${idIntencion}">
                 ${textoIntencion} 
-                <button class="btn-accion" href="?c=intenciones&a=mostrar&t=intencion&id=${idIntencion}" class="btn-accion"> ✎ </button> 
-                <button class="btn-accion js-borrar" data-intencion-id="${idIntencion}">
-                    🗑️
-                </button>
+                <button class="btn-accion btn btn-sm zoom-out rounded-pill shadow-sm me-1" href="?c=intenciones&a=mostrar&t=intencion&id=${idIntencion}"> ✎ </button>
+                <button class="btn-accion js-borrar btn btn-sm btn-danger zoom-out rounded-pill shadow-sm ms-1" data-intencion-id="${idIntencion}">🗑️</button>
             </li>
         `;
         let $header = $('.subtitulo-intenciones').filter(function() {
