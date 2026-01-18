@@ -15,6 +15,10 @@ class loginControlador
 
     public function index()
     {
+        if (!empty($_SESSION['nombre_usuario'])) {
+            FuncionesComunes::redirigir("Location:?c=dashboard&a=index");
+            return;
+        }
         require_once 'vistas/login.php';
     }
 
