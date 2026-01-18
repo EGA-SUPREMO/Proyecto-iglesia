@@ -12,6 +12,16 @@ class GestorMisa extends GestorBase
         $this ->clase_nombre = "Misa";
     }
 
+    public function obtenerTodos($limitarA = null)
+    {
+        if ($limitarA == 'panel') {
+            $sql = "SELECT * FROM misas WHERE DATE(fecha_hora) >= CURDATE() ORDER BY fecha_hora ASC";
+
+            return $this->hacerConsulta($sql, [], 'all');
+        }
+        return $this->obtenerPor([], 'all');
+    }
+
     public function existeMisaEnFechaHora($fechaHoraString)
     {
         $sql = "SELECT COUNT(*) FROM " . $this ->tabla . " WHERE fecha_hora = :fecha_hora";

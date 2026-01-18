@@ -50,4 +50,12 @@ class Misa extends ModeloBase
         }
         $this->permite_intenciones = Validador::validarBooleano($permite_intenciones, "permite intenciones esta misa");
     }
+    public function toArrayParaMostrar($criterio = null)
+    {
+        $array = parent::toArrayParaMostrar($criterio);
+        if ($criterio == 'panel') {
+            $array['permite_intenciones'] = $array['permite_intenciones'] ? 'Si' : "No";
+        }
+        return $array;
+    }
 }

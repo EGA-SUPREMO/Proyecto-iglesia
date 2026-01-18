@@ -50,7 +50,7 @@ abstract class GestorBase
         return (int) $result;
     }
 
-    public function obtenerTodos()
+    public function obtenerTodos($limitarA = null)
     {
         return $this->obtenerPor([], 'all');
     }

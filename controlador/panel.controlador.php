@@ -22,7 +22,7 @@ class PanelControlador
 
     public function index()
     {
-        $modelos = $this->gestor->obtenerTodos();
+        $modelos = $this->gestor->obtenerTodos('panel');
         $datos = [];
         $datos_tabla = [];
 
