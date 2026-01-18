@@ -52,7 +52,7 @@
                         <div class="col-sm-6">
                             <a href="test_diagnostico.php" class="card text-decoration-none text-dark h-100 lift-effect">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title mb-0">Mostrar Test de Diagnostico</h5>
+                                    <h5 class="card-title mb-0">Abrir Diagnóstico</h5>
                                 </div>
                             </a>
                         </div>
