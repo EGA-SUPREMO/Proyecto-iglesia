@@ -238,6 +238,21 @@ class Feligres extends ModeloBase
         $datos = parent::toArrayParaMostrar($criterio);
         if ($criterio == 'formulario') {
             $datos['cedula'] = $this->cedulaConNacionalidad();
+        }elseif ($criterio == 'panel') {
+            $datos['cedula'] = $this->cedulaConNacionalidad();
+            $datos['nombre_completo'] = $this->nombreCompleto();
+            $datos['acta_nacimiento'] = $this->getPartidaDeNacimiento();
+            $datos['lugar_de_nacimiento'] = $this->getPais() . ' - ' . $this->getEstado() . ' - ' . $this->getLocalidad() . ' - ' . $this->getMunicipio();
+            unset($datos['partida_de_nacimiento']);
+            unset($datos['nacionalidad']);
+            unset($datos['primer_nombre']);
+            unset($datos['segundo_nombre']);
+            unset($datos['primer_apellido']);
+            unset($datos['segundo_apellido']);
+            unset($datos['municipio']);
+            unset($datos['localidad']);
+            unset($datos['pais']);
+            unset($datos['estado']);
         }
         return $datos;
     }

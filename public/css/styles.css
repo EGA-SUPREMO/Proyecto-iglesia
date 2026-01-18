@@ -76,3 +76,24 @@ subtitulo-intenciones {
     /* Asegura que la lista quede encima de otros elementos (importante para modales o menús) */
     z-index: 1000; 
 }
+
+
+/* Reducir tamaño de letra y espaciados */
+/*#con-registros {
+    font-size: 1.85rem;
+}*/
+
+#con-registros th, 
+#con-registros td {
+    padding: 8px 4px !important; /* Menos espacio interno */
+    white-space: nowrap; /* Evita que el texto salte de línea, manteniendo orden */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Si el texto es muy largo, pone "..." */
+    max-width: 310px; /* Limita el ancho de las celdas */
+}
+
+/* Permitir que solo ciertas celdas importantes se expandan */
+#con-registros td:hover {
+    white-space: normal; /* Al pasar el mouse, muestra todo el texto */
+    overflow: visible;
+}

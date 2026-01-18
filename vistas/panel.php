@@ -14,7 +14,7 @@
                                     <i class="bi bi-info-circle-fill me-2"></i> No hay registros aún.
                                     <p class="mt-2" id="sugerencia-sin-registro"></p>
                                 </div>
-                                <table class="table table-striped table-hover align-middle border rounded-3 overflow-hidden" id='con-registros'>
+                                <table class="table table-sm table-striped table-hover align-middle border rounded-3 overflow-hidden" id='con-registros'>
                                     <thead class="table-success text-white" id="cabeza-tabla">
                                     </thead>
                                     <tbody id="cuerpo-tabla">
