@@ -2,8 +2,6 @@
 
 require_once ROOT_PATH . "vendor/autoload.php";
 use PhpOffice\PhpWord\TemplateProcessor;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\Settings;
 
 require_once "FuncionesComunes.php";
 
@@ -25,7 +23,7 @@ class GeneradorPdf
 
         $ruta_salida_completa = self::$ruta_documentos . $nombre_archivo_salida;
 
-        $plantilla = new TemplateProcessor($ruta_plantilla_completa);
+        $plantilla = new TemplateProcessor($ruta_plantilla_completa); // asegurar que ;extension=zip no este comentado en php.ini
         foreach ($datos as $key => $valor) {
             $plantilla->setValue($key, $valor);
         }
@@ -44,6 +42,23 @@ class GeneradorPdf
             $rutaAbsolutaDocumentoPdf = $rutaAbsolutaDocumentoDocx;
         }
         return FuncionesComunes::rutaDocumentoAUrl($rutaAbsolutaDocumentoPdf);
+    }
+
+    private static function prepararComandoParaLibreOfficeWindows($ejecutable, $ruta_docx, $salida)
+    {
+        $userProfileDir = 'C:/xampp/tmp/lo_profile';
+        if (!file_exists($userProfileDir)) {
+            mkdir($userProfileDir, 0777, true);
+        }
+        $profileParam = "-env:UserInstallation=file:///" . str_replace('\\', '/', $userProfileDir);
+
+        $exe_path = ($ejecutable === 'soffice') ? 'soffice' : "\"$ejecutable\"";
+        $docx_esc = escapeshellarg($ruta_docx);
+        $out_esc = escapeshellarg($salida);
+
+        // si falla, ejecutar sys_get_temp_dir() a ver si se tiene permisos de escritura, En Windows 11, las políticas de seguridad sobre C:\Windows\Temp son más estrictas
+        $comando = "$exe_path --headless $profileParam --convert-to pdf $docx_esc --outdir $out_esc";
+        return $comando;
     }
 
     public static function convertirDocxAPdfConLibreOfficeEnWindows($ruta_docx, $salida)
@@ -70,13 +85,9 @@ class GeneradorPdf
             if (!$existe) {
                 continue;
             }
-            $exe_path = ($ejecutable === 'soffice') ? 'soffice' : "\"$ejecutable\"";
-
-            $docx_esc = escapeshellarg($ruta_docx);
-            $out_esc = escapeshellarg($salida);
 
             // A partir de aquí, sabemos que el ejecutable existe
-            $comando = "$exe_path --headless --convert-to pdf $docx_esc --outdir $out_esc";
+            $comando = self::prepararComandoParaLibreOfficeWindows($ejecutable, $ruta_docx, $salida);
 
             $output = [];
             $return_var = -1;
