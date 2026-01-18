@@ -500,5 +500,16 @@
         if (!urlParams.get('error')) {
             $primerElemento.focus();
         }
+
+        if (tipo=='feligres' && datosPHP.id) {
+            let datos = {
+                'idFeligres': datosPHP.id,
+                'nombre_tabla': tipo
+            };
+    
+            pedirDatos(JSON.stringify(datos), (resultado) => {
+                    inyectarSeccionSacramentos(resultado, datosPHP.id);
+            }, "modelo/formulario.php");
+        }
     });
 </script>

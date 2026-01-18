@@ -238,7 +238,7 @@ class Feligres extends ModeloBase
         $datos = parent::toArrayParaMostrar($criterio);
         if ($criterio == 'formulario') {
             $datos['cedula'] = $this->cedulaConNacionalidad();
-        }elseif ($criterio == 'panel') {
+        } elseif ($criterio == 'panel') {
             $datos['cedula'] = $this->cedulaConNacionalidad();
             $datos['nombre_completo'] = $this->nombreCompleto();
             $datos['acta_nacimiento'] = $this->getPartidaDeNacimiento();

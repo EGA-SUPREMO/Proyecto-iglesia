@@ -40,6 +40,8 @@ class Formulario
                 return $this->respuestaParaElMatrimonio($identificador, $nombreTabla);
             } elseif (is_array($identificador) && isset($identificador[0]['rol']) && $identificador[0]['rol'] == "libro-registro") {
                 return $this->respuestaParaElRegistroLibro($datos, $nombreTabla);
+            } elseif (is_array($identificador) && isset($identificador[0]['rol']) && $identificador[0]['rol'] == "verificarSacramentos") {
+                return $this->respuestaParaVerificarSacramentosFeligres($datos);
             }
 
             $rol = $identificador['rol'];
@@ -83,6 +85,10 @@ class Formulario
         }
 
         return $respuesta;
+    }
+    private function respuestaParaVerificarSacramentosFeligres($datos)
+    {
+        return $this->gestorFeligres->obtenerInfoSacramental($datos['idFeligres']);
     }
     private function respuestaParaElRegistroLibro($datos, $nombreTabla)
     {
@@ -156,6 +162,13 @@ class Formulario
                 'rol' => 'libro-registro',
                 'tipo' => 'numero_libro',
                 'valor' => $datos['constancia-numero_libro']
+            ];
+            return $identificadores;
+        }
+        if (isset($datos['idFeligres'])) {
+            $identificadores[] = [
+                'rol' => 'verificarSacramentos',
+                'valor' => $datos['idFeligres']
             ];
             return $identificadores;
         }

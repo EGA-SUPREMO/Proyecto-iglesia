@@ -57,6 +57,24 @@ class GestorFeligres extends GestorBase
         return $this->hacerConsulta($sql, [$datosCedula['numero'], $datosCedula['nacionalidad']], 'all');
     }
 
+    public function obtenerInfoSacramental($idFeligres)
+    {
+        $sql = "SELECT 
+                        f.id,
+                        b.id AS bautizo_id, b.fecha_bautizo,
+                        com.id AS comunion_id, com.fecha_comunion,
+                        conf.id AS confirmacion_id, conf.fecha_confirmacion,
+                        mat.id AS matrimonio_id, mat.fecha_matrimonio
+                    FROM feligreses f
+                    LEFT JOIN constancia_de_fe_de_bautizo b ON f.id = b.feligres_bautizado_id
+                    LEFT JOIN constancia_de_comunion com ON f.id = com.feligres_id
+                    LEFT JOIN constancia_de_confirmacion conf ON f.id = conf.feligres_confirmado_id
+                    LEFT JOIN constancia_de_matrimonio mat ON (f.id = mat.contrayente_1_id OR f.id = mat.contrayente_2_id)
+                    WHERE f.id = ?;";
+
+        return $this->hacerConsulta($sql, [$idFeligres], 'assoc');
+    }
+
     public function obtenerPorCedula($cedulaCompleta)
     {
         $datosCedula = $this->separarCedula($cedulaCompleta);
