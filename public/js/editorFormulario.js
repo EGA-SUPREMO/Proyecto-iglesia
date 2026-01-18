@@ -4,12 +4,15 @@
  * @param {number} idFeligres - El ID del feligrés actual.
  */
 function inyectarSeccionSacramentos(info, idFeligres) {
-    const contenedorPrincipal = document.getElementById('formulario');
-    const contenedor = document.createElement('div');
-    contenedor.id = 'contenedor-sacramentos';
-    contenedor.classList.add('card-body');
-    contenedorPrincipal.appendChild(contenedor);
+    const contenedorPrincipal = document.getElementById('contenedor-formulario');
+    let contenedor = document.getElementById('contenedor-sacramentos');
 
+    if (!contenedor) {
+        contenedor = document.createElement('div');
+        contenedor.id = 'contenedor-sacramentos';
+        contenedor.classList.add('card-body');
+        contenedorPrincipal.appendChild(contenedor);
+    }
     const sacramentos = [
         { nombre: 'Bautizo', tabla: 'constancia_de_fe_de_bautizo', id: info.bautizo_id, fecha: info.fecha_bautizo },
         { nombre: 'Comunión', tabla: 'constancia_de_comunion', id: info.comunion_id, fecha: info.fecha_comunion },

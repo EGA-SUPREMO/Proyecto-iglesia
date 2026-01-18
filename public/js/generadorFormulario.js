@@ -886,7 +886,6 @@ function asignarAtributosComunes($element, properties) {
             const valorHidden = $(this).val(); 
             const textoBase = $tituloFormulario.text().replace(/^(Registrar|Editar)\s+/, ''); 
             
-            console.log(textoBase);
             let nuevoPrefijo = '';
             if (valorHidden === '0' || valorHidden === 0) {
                 nuevoPrefijo = 'Registrar ';
@@ -896,9 +895,22 @@ function asignarAtributosComunes($element, properties) {
 
             const url = new URL(window.location.href);
             url.searchParams.set('id', valorHidden);
+            const urlParams = new URLSearchParams(window.location.search);
+            const tipo = urlParams.get('t');
+            
             window.history.replaceState(null, '', url.toString());
 
             $tituloFormulario.text(nuevoPrefijo + textoBase);
+            if (tipo=='feligres' && valorHidden) {
+                let datos = {
+                    'idFeligres': valorHidden,
+                    'nombre_tabla': tipo
+                };
+        
+                pedirDatos(JSON.stringify(datos), (resultado) => {
+                        inyectarSeccionSacramentos(resultado, datos.id);
+                }, "modelo/formulario.php");
+            }
         });
     }
     if ($element.attr('name') && $element.attr('name').includes('-cedula')) {
@@ -1148,7 +1160,7 @@ function generarFormulario(definicionFormulario, tituloFormulario) {
             </header>
         </div>`);
 
-    const $cardBody = $('<div class="card-body">');
+    const $cardBody = $('<div class="card-body" id="contenedor-formulario">');
     const $form = $('<form>').attr({
         action: definicionFormulario.action,
         method: 'POST',

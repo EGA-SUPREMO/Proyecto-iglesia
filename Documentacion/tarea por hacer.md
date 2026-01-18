@@ -1,3 +1,9 @@
+en variables de entorno
+ahi deberia ir definido los horarios de las misas recurrentes, para no estar cambiando entre casas parroquiales
+puede ser estilo dia_1 = ... y asi, para luego iterar en el codigo
+>-------------------------<
+
+
 Tarea UX/UI: Notificación de No Disponibilidad de Misas
 
 Contexto: El método de backend consultarOCrearMisas filtra las misas disponibles, excluyendo aquellas que ya tienen una intención registrada (según el objeto_de_peticion_nombre o peticion_id). Actualmente, las misas ocupadas simplemente no se muestran, lo que crea "huecos" sin explicación en la interfaz de usuario.
