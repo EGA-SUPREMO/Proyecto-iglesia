@@ -60,6 +60,8 @@ class ServicioMisa extends ServicioBase
         $fecha_hora_misa->setTime((int)$hora, (int)$minuto, (int)$segundo);
 
         $ahora = new DateTime('now');
+        $ahora->setTime(0, 0, 0);
+
         if ($fecha_hora_misa < $ahora) {
             error_log("   -> Omitiendo: Misa del " . $fecha_hora_misa->format('Y-m-d H:i') . " ya pasó.\n");
             return;
