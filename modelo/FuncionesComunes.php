@@ -28,7 +28,7 @@ class FuncionesComunes
     {
         if (empty($_SESSION['nombre_usuario'])) {
             $mensajeCodificado = urlencode('Necesitas iniciar sesión para acceder a esta página');
-            self::redirigir('Location: ?c=login&a=index&error='.$mensajeCodificado);
+            self::redirigir('Location: index.php?c=login&a=index&error='.$mensajeCodificado);
         }
     }
 
