@@ -101,7 +101,7 @@
                     <a href="index.php?c=formulario&a=mostrar&t=${nombreTablaGlobal}&id=${dato.id}" class="btn btn-sm btn-warning me-2 rounded-pill shadow-sm">
                         Editar
                     </a>
-                    <form action="?c=panel&a=eliminar&t=${nombreTablaGlobal}" method="POST" onsubmit="return confirm('¿Seguro de eliminar?');" style="display:inline;">
+                    <form action="?c=panel&a=eliminar&t=${nombreTablaGlobal}" method="POST" onsubmit="return confirm('¿Seguro de eliminar? Se eliminaran todos los registros relacionados');" style="display:inline;">
                         <input type="hidden" name="id" value="${dato.id}">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn btn-sm btn-danger zoom-out rounded-pill shadow-sm">

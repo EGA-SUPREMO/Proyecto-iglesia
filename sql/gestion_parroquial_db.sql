@@ -7,6 +7,9 @@
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
+CREATE DATABASE gestion_parroquial_db;
+USE gestion_parroquial_db;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -16,8 +19,6 @@ SET time_zone = "+00:00";
 -- FLUSH PRIVILEGES;
 
 
-CREATE DATABASE gestion_parroquial_db;
-USE gestion_parroquial_db;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -80,8 +81,8 @@ CREATE TABLE `parentescos` (
   `id_padre` INT NOT NULL,
   `id_hijo` INT NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_padre`) REFERENCES `feligreses`(`id`),
-  FOREIGN KEY (`id_hijo`) REFERENCES `feligreses`(`id`)
+  FOREIGN KEY (`id_padre`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`id_hijo`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 ALTER TABLE `parentescos`
@@ -201,9 +202,9 @@ CREATE TABLE `constancia_de_fe_de_bautizo` (
   `numero_pagina` INT(10) NOT NULL,
   `numero_marginal` INT(10) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`feligres_bautizado_id`) REFERENCES `feligreses`(`id`),
-  FOREIGN KEY (`padre_id`) REFERENCES `feligreses`(`id`),
-  FOREIGN KEY (`madre_id`) REFERENCES `feligreses`(`id`),
+  FOREIGN KEY (`feligres_bautizado_id`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`padre_id`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`madre_id`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE,
   FOREIGN KEY (`ministro_id`) REFERENCES `sacerdotes`(`id`),
   FOREIGN KEY (`ministro_certifica_id`) REFERENCES `sacerdotes`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -225,8 +226,8 @@ CREATE TABLE `constancia_de_comunion` (
   `feligres_id` INT(11) UNIQUE NOT NULL,
   `fecha_comunion` DATE NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`feligres_id`) REFERENCES `feligreses`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  FOREIGN KEY (`feligres_id`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `constancia_de_confirmacion` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -240,9 +241,9 @@ CREATE TABLE `constancia_de_confirmacion` (
   `numero_pagina` INT(10) NOT NULL,
   `numero_marginal` INT(10) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`feligres_confirmado_id`) REFERENCES `feligreses`(`id`),
-  FOREIGN KEY (`padre_1_id`) REFERENCES `feligreses`(`id`),
-  FOREIGN KEY (`padre_2_id`) REFERENCES `feligreses`(`id`),
+  FOREIGN KEY (`feligres_confirmado_id`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`padre_1_id`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`padre_2_id`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE,
   FOREIGN KEY (`ministro_id`) REFERENCES `sacerdotes`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -271,8 +272,8 @@ CREATE TABLE `constancia_de_matrimonio` (
   `numero_pagina` INT(10) NOT NULL,
   `numero_marginal` INT(10) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`contrayente_1_id`) REFERENCES `feligreses`(`id`),
-  FOREIGN KEY (`contrayente_2_id`) REFERENCES `feligreses`(`id`),
+  FOREIGN KEY (`contrayente_1_id`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`contrayente_2_id`) REFERENCES `feligreses`(`id`) ON DELETE CASCADE,
   FOREIGN KEY (`ministro_id`) REFERENCES `sacerdotes`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -383,10 +384,10 @@ ADD COLUMN `constancia_de_fe_de_bautizo_id` INT NULL,
 ADD COLUMN `constancia_de_confirmacion_id` INT NULL,
 ADD COLUMN `constancia_de_comunion_id` INT NULL,
 ADD COLUMN `constancia_de_matrimonio_id` INT NULL,
-ADD FOREIGN KEY (`constancia_de_fe_de_bautizo_id`) REFERENCES `constancia_de_fe_de_bautizo` (`id`),
-ADD FOREIGN KEY (`constancia_de_confirmacion_id`) REFERENCES `constancia_de_confirmacion` (`id`),
-ADD FOREIGN KEY (`constancia_de_comunion_id`) REFERENCES `constancia_de_comunion` (`id`),
-ADD FOREIGN KEY (`constancia_de_matrimonio_id`) REFERENCES `constancia_de_matrimonio` (`id`);
+ADD FOREIGN KEY (`constancia_de_fe_de_bautizo_id`) REFERENCES `constancia_de_fe_de_bautizo` (`id`) ON DELETE CASCADE,
+ADD FOREIGN KEY (`constancia_de_confirmacion_id`) REFERENCES `constancia_de_confirmacion` (`id`) ON DELETE CASCADE,
+ADD FOREIGN KEY (`constancia_de_comunion_id`) REFERENCES `constancia_de_comunion` (`id`) ON DELETE CASCADE,
+ADD FOREIGN KEY (`constancia_de_matrimonio_id`) REFERENCES `constancia_de_matrimonio` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `peticiones`
 ADD UNIQUE KEY (`constancia_de_fe_de_bautizo_id`),
