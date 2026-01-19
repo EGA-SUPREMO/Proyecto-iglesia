@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Estilos básicos para facilitar la lectura
 echo "<style>
     body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
     .card { background: white; padding: 15px; margin-bottom: 15px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -12,6 +11,29 @@ echo "<style>
     .fail { color: red; font-weight: bold; border: 1px solid red; padding: 5px; background: #ffeeee; }
     .warn { color: orange; font-weight: bold; }
     h2 { border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 8px; /* Membuat sudut lebih bulat/modern */
+        transition: all 0.3s ease; /* Membuat efek halus saat ditekan */
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2); /* Efek bayangan lembut */
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3; /* Warna berubah sedikit gelap saat kursor di atasnya */
+        transform: translateY(-2px); /* Efek melayang sedikit */
+        box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+    }
 </style>";
 
 echo '<a href="index.php" class="btn btn-primary">Volver</a>';
@@ -35,7 +57,7 @@ echo "</ul></div>";
 
 // --- BLOQUE 2: EXTENSIONES CRÍTICAS ---
 echo "<div class='card'><h2>2. Extensiones Requeridas</h2>";
-$extensiones = ['zip', 'xml', 'gd', 'fileinfo'];
+$extensiones = ['zip', 'xml', 'gd', 'intl', 'fileinfo'];
 echo "<ul>";
 foreach ($extensiones as $ext) {
     if (extension_loaded($ext)) {
