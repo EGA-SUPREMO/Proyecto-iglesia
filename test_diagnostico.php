@@ -1,6 +1,7 @@
 <?php
-//include_once 'modelo/FuncionesComunes.php';
-//FuncionesComunes::requerirLogin();
+session_start();
+include_once 'modelo/FuncionesComunes.php';
+FuncionesComunes::requerirLogin();
 
 // 1. FORZAR VISUALIZACIÓN DE ERRORES (Crítico para debugging)
 ini_set('display_errors', 1);
