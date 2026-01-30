@@ -106,7 +106,7 @@
 
             case 'objeto_de_peticion':
                 formularioCampos = [
-                    { type: 'autocomplete', name: 'nombre', label: 'Por que es la intencion',  required: true, validarMetodo: 'validarNombre', value: datosPHP.nombre },
+                    { type: 'autocomplete', name: 'nombre', label: 'Por que es la intencion',  required: true, validarMetodo: 'validarNombreUsuario', value: datosPHP.nombre },
                 ];
             break;
             case 'sacerdote':
@@ -135,7 +135,7 @@
                 formularioCampos = [
                     { type: 'fila', 
                         campos: [
-                            { type: 'autocomplete', name: 'objeto_de_peticion_nombre', label: 'Por que es la intencion',  required: true, validarMetodo: 'validarNombre', autocompletarMetodo: 'consultarMisasPorRango', sugerencias: datosPHP.objeto_de_peticion, value: datosPHP.objeto_de_peticion_nombre },
+                            { type: 'autocomplete', name: 'objeto_de_peticion_nombre', label: 'Por que es la intencion',  required: true, validarMetodo: 'validarNombreUsuario', autocompletarMetodo: 'consultarMisasPorRango', sugerencias: datosPHP.objeto_de_peticion, value: datosPHP.objeto_de_peticion_nombre },
                             { type: 'select', name: 'tipo_de_intencion_id', label: 'Selecciona el tipo de intención',  required: true, value: datosPHP.tipo_de_intencion_id, options: [
                               { value: '0', text: 'Selecciona un tipo de intención', disabled: true },
                               { value: '1', text: 'Acción de Gracias' },
