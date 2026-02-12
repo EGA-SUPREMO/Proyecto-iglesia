@@ -62,9 +62,9 @@ The system utilizes a normalize relational database comprising **15 tables** to 
 
 **Prerequisites:**
 
-* PHP 7.4 or higher
-* MySQL 5.7+
-* OpenOffice (for PDF generation features)
+* PHP 8.4 or higher
+* MySQL 5.7+ or MariaDB
+* LibreOffice (for PDF generation features)
 
 **Steps:**
 
@@ -76,16 +76,16 @@ git clone https://github.com/yourusername/parish-management-system.git
 
 
 2. Import the database schema:
-* Import `database.sql` into your MySQL server.
+* Import `sql/gestion_parroquial_db.sql` into your MySQL/MariaDB server.
 
 
 3. Configure environment variables:
-* Rename `config.example.php` to `config.php` and update DB credentials.
+* Rename `template.env` to `.env` and update DB credentials.
 
 
 4. **Run the System Check:**
-* Navigate to `/install/check.php` (or wherever your testing module is).
-* Ensure all status lights are green (Libraries, Permissions, OpenOffice).
+* Navigate to `/test_diagnostico.php`.
+* Ensure all status lights are green (Libraries, Permissions, LibreOffice).
 
 
 
