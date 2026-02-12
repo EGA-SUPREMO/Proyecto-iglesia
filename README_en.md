@@ -50,9 +50,21 @@ Prior to this system, the parish relied on physical books and manual Word docume
 * **Methodology:** Extreme Programming (XP) - Iterative development with continuous feedback from the Parish Priest and Secretary.
 * **External Tools:** LibreOffice (Headless mode for document conversion), Google Drive (for backups).
 
-### 🗄️ Database Architecture
+## Database Architecture
 
-The system utilizes a normalize relational database comprising **15 tables** to handle complex relationships between parishioners, sacraments, and events.
+The system utilizes a **normalized relational schema (MySQL/MariaDB)** across 15 tables, optimized for strict data integrity and the automation of parish-specific business logic.
+
+### Technical Implementation
+
+* **Engine-Level Validation:** Extensive use of `CHECK` constraints prevents logical inconsistencies before they reach the application layer.
+* `chk_roles_familiares_distintos`: Ensures the Baptized, Mother, and Father represent three unique records in the `constancia_de_fe_de_bautizo` table.
+* `chk_cedula_partida_nacimiento`: Guarantees that every record in `feligreses` contains at least one valid form of identification (ID card or birth certificate).
+
+
+* **Referential Integrity:** Foreign keys are configured with `ON DELETE CASCADE` for the `feligreses` table. This ensures that deleting a parishioner automatically prunes all associated sacramental history and petitions, preventing orphaned records.
+* **Unified Transaction Hub:** The architecture employs a polymorphic-style approach in the `peticiones` table. It acts as a central ledger, dynamically linking service requests to specific sacrament records (`constancia_id`) or mass intentions (`misa_id`) based on the transaction type.
+
+### 🧬 Entity Relationship Diagram (ERD)
 
 *(TODO Entity-Relationship Diagram (ERD) image).*
 
