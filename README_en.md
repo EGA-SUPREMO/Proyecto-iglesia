@@ -54,7 +54,7 @@ Prior to this system, the parish relied on physical books and manual Word docume
 
 The system utilizes a normalize relational database comprising **15 tables** to handle complex relationships between parishioners, sacraments, and events.
 
-*(Optional: If you have an Entity-Relationship Diagram (ERD) image, put it here. Employers love seeing DB structure).*
+*(TODO Entity-Relationship Diagram (ERD) image).*
 
 ---
 
