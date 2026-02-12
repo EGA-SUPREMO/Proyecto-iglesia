@@ -70,7 +70,7 @@ The system utilizes a normalize relational database comprising **15 tables** to 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/parish-management-system.git
+git clone https://github.com/EGA-SUPREMO/Sistema-de-Gestion-Parroquial.git
 
 ```
 
