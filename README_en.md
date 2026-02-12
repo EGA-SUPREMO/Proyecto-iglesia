@@ -22,7 +22,7 @@ Prior to this system, the parish relied on physical books and manual Word docume
 
 #### 2. Automated Document Generation
 
-* **PDF Certificate Engine:** implementation using the library [PHPWord](https://github.com/PHPOffice/PHPWord) and OpenOffice to generate legal-ready certificates instantly.
+* **PDF Certificate Engine:** implementation using the library [PHPWord](https://github.com/PHPOffice/PHPWord) and [LibreOffice](https://www.libreoffice.org/) to generate legal-ready certificates instantly.
 * **Formatting Consistency:** Eliminates human error associated with manual Word document editing.
 
 #### 3. Business Logic & Validation
@@ -34,9 +34,9 @@ Prior to this system, the parish relied on physical books and manual Word docume
 
 * **Automated Backups:** A custom script executes daily SQL dumps and synchronizes them to **Google Drive**, ensuring disaster recovery and data persistence.
 * **Self-Diagnostic Module:** Includes a built-in "System Health Check" that verifies server configuration upon deployment. It checks:
-* Required PHP extensions (ZIP, XML).
-* OpenOffice installation and headless accessibility.
-* Directory write permissions.
+* Required PHP extensions (ZIP, XML and INTL).
+  * LibreOffice installation.
+  * Directory write permissions.
 
 
 
@@ -45,10 +45,10 @@ Prior to this system, the parish relied on physical books and manual Word docume
 ### 🛠️ Technical Stack
 
 * **Backend:** PHP (Native/MVC approach)
-* **Database:** MySQL (Relational Design, 15 Tables)
-* **Frontend:** HTML5, CSS3, JavaScript (Vanilla + AJAX for async operations)
+* **Database:** MySQL/MariaDB (Relational Design, 15 Tables)
+* **Frontend:** HTML5, CSS3, JavaScript (JQuery + AJAX for async operations)
 * **Methodology:** Extreme Programming (XP) - Iterative development with continuous feedback from the Parish Priest and Secretary.
-* **External Tools:** OpenOffice (Headless mode for document conversion), Google Drive API (for backups).
+* **External Tools:** LibreOffice (Headless mode for document conversion), Google Drive (for backups).
 
 ### 🗄️ Database Architecture
 
