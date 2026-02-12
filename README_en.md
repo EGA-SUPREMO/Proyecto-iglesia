@@ -34,7 +34,7 @@ Prior to this system, the parish relied on physical books and manual Word docume
 
 * **Automated Backups:** A custom script executes daily SQL dumps and synchronizes them to **Google Drive**, ensuring disaster recovery and data persistence.
 * **Self-Diagnostic Module:** Includes a built-in "System Health Check" that verifies server configuration upon deployment. It checks:
-* Required PHP extensions (ZIP, XML and INTL).
+  * Required PHP extensions (ZIP, XML and INTL).
   * LibreOffice installation.
   * Directory write permissions.
 
@@ -99,21 +99,5 @@ This project was conducted as a descriptive research project under the modality 
 * **Methodology:** Extreme Programming (XP).
 * **Data Collection:** Census-based sample using Likert-scale surveys to identify management flaws and validate the software solution.
 
-### 👤 Author
-
-**[Your Name]**
-
-* **Portfolio:** [Link to your portfolio site]
-* **LinkedIn:** [Link to your LinkedIn]
-* **Email:** [Your Email]
-
----
-
-### 💡 Why this structure works for you:
-
-1. **The "System Health Check":** I highlighted the "module meant for internal testing" as a major feature called "Self-Diagnostic Module." This shows employers you think about **deployment** and **maintenance**, not just writing code.
-2. **The Resume Mapping:** I took the "15-table relational database" and "Google Drive backup" points and gave them their own sections. These are high-value technical skills that separate you from entry-level developers.
-3. **Academic vs. Professional:** I moved the academic abstract to the bottom. While impressive for your degree, a freelance client cares more about the "Features" and "Screenshots" than the "Likert-scale methodology."
-4. **OpenOffice:** I emphasized the OpenOffice integration. Connecting PHP to external software (like OpenOffice) demonstrates the ability to handle complex server-side integrations.
-
-**Would you like me to help you write the specific SQL description for the "Database Architecture" section, or perhaps help draft the code snippet for the "System Health Check" to make it look impressive in the repo?** 
+## License
+This project is licensed under the [GNU General Public License (GPL) version 3](LICENSE)
