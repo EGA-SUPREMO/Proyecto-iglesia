@@ -24,7 +24,8 @@ Prior to this system, the parish relied on physical books and manual Word docume
 
 * **Centralized Database:** Tracks a parishioner's journey from Baptism to Marriage in one database, replacing scattered paper files.
 * **Smart Auto-fill:** The system saves time by reusing existing data. For example, when registering for First Communion, it automatically pulls up the person's Baptism details so you don't have to type them again.
-* **Data Safety:** TODO the checks and Uses `ON DELETE CASCADE` to ensure that if a parishioner is removed, all associated records are pruned to prevent orphaned data. while also giving appropite warning for this kind of operation
+* **Smart Data Integrity:** Leverages atomic transactions and `ON DELETE CASCADE` to ensure that complex records (like `peticiones` and `constancia_de_bautizo`) are saved perfectly or not at all—preventing orphaned data and partial saves.
+* **Safety Guards:** Built-in confirmation prompts and clear warnings to protect critical records from accidental deletion.
 
 #### 2. Automated Document Generation
 
