@@ -8,10 +8,15 @@ The **Parish Management System** is a web application built to help the parish m
 Prior to this system, the parish relied on physical books and manual Word documents, which was slow and often led to errors. This solution digitizes the entire process, making it easy to issue sacraments (Baptism, Communion, Confirmation, and Marriage) and manage daily prayer intentions.
 
 ### 📸 Screenshots
+<img src="Documentacion/demo1.GIF" width="600">
+<p align="left">
+  <img src="Documentacion/agenda_screenshot.png" width="50%" />
+</p>
 
-*(TODO Place a few screenshots here! Suggestions: The Dashboard, The "Prayer Intentions" form, and a generated PDF certificate. Visuals sell the code.)*
-
----
+<p align="center">
+  <img src="Documentacion/dashboard_screenshot.png" width="50%" />
+  <img src="Documentacion/example_certificate.png" width="50%" />
+</p>
 
 ### Key Features
 
