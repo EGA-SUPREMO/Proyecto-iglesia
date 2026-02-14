@@ -84,7 +84,7 @@ The system utilizes a **normalized relational schema (MySQL/MariaDB)** across 15
 
 **Steps:**
 
-1. Clone the repository:
+1. **Clone the repository:**
 ```bash
 git clone https://github.com/EGA-SUPREMO/Sistema-de-Gestion-Parroquial.git
 
@@ -98,22 +98,22 @@ composer install
 
 3.  **Database Setup:**
     * Create a database named `gestion_parroquial_db`.
-    * Import `sql/gestion_parroquial_db.sql` into your MySQL/MariaDB server.
+    * Import the file `sql/gestion_parroquial_db.sql`.
 
-4.  **Environment Configuration:**
-    * Rename `template.env` to `.env` and update DB credentials.
-    * Set `DB_DIR_BACKUP` to a valid local path (preferably a Google Drive/OneDrive synced folder) for backups.
+4.  **Configuration:**
+    * Rename `template.env` to `.env` and update your database credentials.
+    * Set `DB_DIR_BACKUP` to a valid path (preferably a cloud-synced folder).
  
-5.  **Windows Specific Configuration:**
-    * If using Windows 11, ensure template files in `public/plantillas/` are not "Blocked". (Right-click file -> Properties -> Unblock).
+    * **Windows Users:**
+        * If using Windows 11, ensure template files in `public/plantillas/` are not "Blocked". (Right-click file -> Properties -> Unblock).
  
-6.  **Run the System Check:**
+5.  **Run the System Check:**
     * Navigate to `http://localhost/test_diagnostico.php`.
     * Ensure all status lights are green (Libraries, Permissions, LibreOffice). If "LibreOffice" is red, PDF generation will fail (falling back to .docx).
 
 ---
 
-### 🎓 Academic Context
+### Academic Context
 
 This project was conducted as a capstone project to obtain an Associate of Science (A.S.) in Computer Science.
 
