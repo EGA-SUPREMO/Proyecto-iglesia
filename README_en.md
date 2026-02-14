@@ -32,46 +32,40 @@ Prior to this system, the parish relied on physical books and manual Word docume
 * **Easy Management:** Allows the secretary to easily add, edit, or delete liturgical schedules.
 
 
-#### 4. System Reliability & DevOps
+#### 4. Reliability & Maintenance
 
-* **Disaster Recovery Strategy:** A custom script executes daily SQL dumps to a specific local directory (`DB_DIR_BACKUP`). When combined with a cloud sync client (Google Drive/OneDrive Desktop), this ensures off-site persistence.
+* **Automatic Backups:** A script runs daily to save a copy of the database to a local folder. When paired with Google Drive or OneDrive, this ensures data is never lost.
 * **Self-Diagnostic Module:** Includes a built-in "System Health Check" (`/test_diagnostico.php`) that verifies server configuration upon deployment. It checks:
   * Required PHP extensions (ZIP, XML and INTL).
   * LibreOffice installation and path visibility.
   * Directory write permissions.
+
+#### 4. Reliability & Maintenance
+
+* **System Health Check:** Includes a self-test page (`/test_diagnostico.php`) that checks if the server is ready (verifying PHP extensions, permissions, and LibreOffice status) to prevent deployment issues.
 
 ---
 
 ### 🛠️ Technical Stack
 
 * **Backend:** PHP (Native/MVC approach)
-* **Dependency Management:** Composer
-* **Database:** MySQL/MariaDB (Relational Design, 15 Tables)
-* **Frontend:** HTML5, CSS3, JavaScript (jQuery + AJAX for async operations)
+* **Dependency Manager:** Composer
+* **Database:** MySQL/MariaDB (15 Tables)
+* **Frontend:** HTML5, CSS3, JavaScript (jQuery)
 * **Methodology:** Extreme Programming (XP) - Iterative development with continuous feedback from the Parish Priest and Secretary.
 * **External Tools:**
   * **LibreOffice:** Used in headless mode for `.docx` to `.pdf` conversion.
   * **PHPWord:** For template processing.
 
-
 ## Database Architecture
 
 The system utilizes a **normalized relational schema (MySQL/MariaDB)** across 15 tables, optimized for strict data integrity and the automation of parish-specific business logic.
 
-### Technical Implementation
-
-* **Engine-Level Validation:** Extensive use of `CHECK` constraints prevents logical inconsistencies before they reach the application layer.
-* Some examples are:
-* `chk_roles_familiares_distintos`: Ensures the Baptized, Mother, and Father represent three unique records in the `constancia_de_fe_de_bautizo` table.
-* `chk_cedula_partida_nacimiento`: Guarantees that every record in `feligreses` contains at least one valid form of identification (ID card or birth certificate).
-
-* **Referential Integrity:** Foreign keys are configured with `ON DELETE CASCADE` for the `feligreses` table. This ensures that deleting a parishioner automatically prunes all associated sacramental history and petitions, preventing orphaned records.
-* **Unified Transaction Hub:** The architecture employs a polymorphic-style approach in the `peticiones` table. It acts as a central ledger, dynamically linking service requests to specific sacrament records (`constancia_id`) or mass intentions (`misa_id`) based on the transaction type.
-
-+* **Engine-Level Validation:** Extensive use of `CHECK` constraints prevents logical inconsistencies.
-+    * `chk_roles_familiares_distintos`: Ensures the Baptized, Mother, and Father represent three unique records.
-+    * `chk_cedula_partida_nacimiento`: Guarantees every parishioner has at least one valid ID.
-+* **Unified Transaction Hub:** The architecture employs a polymorphic-style approach in the `peticiones` table. It acts as a central ledger, dynamically linking service requests to specific sacrament records or mass intentions.
+### How it Works
+* **Strict Rules (Constraints):** We use SQL checks to stop bad data before it enters the system. A few examples are:
+    * `chk_roles_familiares_distintos`: Ensures that the Child, Mother, and Father in a baptism record are three different people.
+    * `chk_cedula_partida_nacimiento`: Guarantees that every parishioner has at least one valid ID (Identity Card or Birth Certificate).
+* **Centralized Transactions:** The `peticiones` (petitions) table acts as a central hub. It links service requests to either a specific sacrament or a mass intention, keeping records organized.
 
 ### 🧬 Entity Relationship Diagram (ERD)
 
