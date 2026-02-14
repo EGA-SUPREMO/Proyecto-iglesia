@@ -1,7 +1,7 @@
 # Parish Management System (PMS)
 > **Note to Reader:** This project was developed as a Capstone for a T.S.U. in Computer Science (2024-2026), serving the San Diego de Alcalá and Candelaria parish house.
 
-### 📖 Overview
+## 📖 Overview
 
 The **Parish Management System** is a web application built to help the parish move from paper records to a digital workflow.
 
@@ -13,12 +13,12 @@ Prior to this system, the parish relied on physical books and manual Word docume
   <img src="Documentacion/agenda_screenshot.png" width="50%" />
 </p>
 
-<p align="center">
+<p align="left">
   <img src="Documentacion/dashboard_screenshot.png" width="50%" />
   <img src="Documentacion/example_certificate.png" width="50%" />
 </p>
 
-### Key Features
+## Key Features
 
 #### 1. Managing Parish Records
 
@@ -51,7 +51,7 @@ Prior to this system, the parish relied on physical books and manual Word docume
 
 ---
 
-### 🛠️ Technical Stack
+## 🛠️ Technical Stack
 
 * **Backend:** PHP (Native/MVC approach)
 * **Dependency Manager:** Composer
