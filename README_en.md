@@ -49,7 +49,8 @@ Prior to this system, the parish relied on physical books and manual Word docume
 * **Database:** MySQL/MariaDB (Relational Design, 15 Tables)
 * **Frontend:** HTML5, CSS3, JavaScript (jQuery + AJAX for async operations)
 * **Methodology:** Extreme Programming (XP) - Iterative development with continuous feedback from the Parish Priest and Secretary.
-* **External Tools:** * **LibreOffice:** Used in headless mode for `.docx` to `.pdf` conversion.
+* **External Tools:**
+  * **LibreOffice:** Used in headless mode for `.docx` to `.pdf` conversion.
   * **PHPWord:** For template processing.
 
 
@@ -100,34 +101,31 @@ Navigate to the project folder and run:
 ```bash
 composer install
 ```
+
+3.  **Database Setup:**
+    * Create a database named `gestion_parroquial_db`.
+    * Import `sql/gestion_parroquial_db.sql` into your MySQL/MariaDB server.
+
+4.  **Environment Configuration:**
+    * Rename `template.env` to `.env` and update DB credentials.
+    * Set `DB_DIR_BACKUP` to a valid local path (preferably a Google Drive/OneDrive synced folder) for backups.
  
-+3.  **Database Setup:**
-+    * Create a database named `gestion_parroquial_db`.
-+    * Import `sql/gestion_parroquial_db.sql` into your MySQL/MariaDB server.
-
-2. Import the database schema:
-* Import `sql/gestion_parroquial_db.sql` into your MySQL/MariaDB server.
-
-
-3. Configure environment variables:
-* Rename `template.env` to `.env` and update DB credentials.
-
-
-4. **Run the System Check:**
-* Navigate to `/test_diagnostico.php`.
-* Ensure all status lights are green (Libraries, Permissions, LibreOffice).
-
-
+5.  **Windows Specific Configuration:**
+    * If using Windows 11, ensure template files in `public/plantillas/` are not "Blocked". (Right-click file -> Properties -> Unblock).
+ 
+6.  **Run the System Check:**
+    * Navigate to `http://localhost/test_diagnostico.php`.
+    * Ensure all status lights are green (Libraries, Permissions, LibreOffice). If "LibreOffice" is red, PDF generation will fail (falling back to .docx).
 
 ---
 
 ### 🎓 Academic Context
 
-This project was conducted as a descriptive research project under the modality of a special project.
+This project was conducted as a capstone project to obtain an Associate of Science (A.S.) in Computer Science.
 
 * **Objective:** Optimize execution and delivery of services for the San Diego de Alcalá parish.
 * **Methodology:** Extreme Programming (XP).
-* **Data Collection:** Census-based sample using Likert-scale surveys to identify management flaws and validate the software solution.
+* **Data Collection:** Likert-scale surveys & census-based data analysis.
 
 ## License
 This project is licensed under the [GNU General Public License (GPL) version 3](LICENSE)
