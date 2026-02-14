@@ -3,9 +3,9 @@
 
 ### 📖 Overview
 
-The **Parish Management System** is a full-stack web application designed to digitize and optimize the administrative workflows of a religious non-profit organization.
+The **Parish Management System** is a web application built to help the parish move from paper records to a digital workflow.
 
-Prior to this system, the parish relied on physical books and manual Word documents, leading to data redundancy and slow processing times. This solution migrates the record-keeping to a digital environment, streamlining the issuance of sacraments (Baptism, Communion, Confirmation and Marriage) and managing daily prayer intentions.
+Prior to this system, the parish relied on physical books and manual Word documents, which was slow and often led to errors. This solution digitizes the entire process, making it easy to issue sacraments (Baptism, Communion, Confirmation, and Marriage) and manage daily prayer intentions.
 
 ### 📸 Screenshots
 
@@ -15,22 +15,22 @@ Prior to this system, the parish relied on physical books and manual Word docume
 
 ### Key Features
 
-#### 1. Lifecycle Record Management
+#### 1. Managing Parish Records
 
-* **Centralized Database:** Migrated physical records to a relational database, tracking parishioner history from Baptism to Marriage.
-* **Smart Auto-fill:** SQL queries retrieve existing data to populate new forms (e.g., pulling Baptism data when registering for First Communion), significantly reducing data entry time.
-* **Referential Integrity:** TODO the checks and Uses `ON DELETE CASCADE` to ensure that if a parishioner is removed, all associated records are pruned to prevent orphaned data. also give appropite warning for this kind of operation
+* **Centralized Database:** Tracks a parishioner's journey from Baptism to Marriage in one database, replacing scattered paper files.
+* **Smart Auto-fill:** The system saves time by reusing existing data. For example, when registering for First Communion, it automatically pulls up the person's Baptism details so you don't have to type them again.
+* **Data Safety:** TODO the checks and Uses `ON DELETE CASCADE` to ensure that if a parishioner is removed, all associated records are pruned to prevent orphaned data. while also giving appropite warning for this kind of operation
 
 #### 2. Automated Document Generation
 
 * **PDF Certificate Engine:** implementation using the library [PHPWord](https://github.com/PHPOffice/PHPWord) and [LibreOffice (Headless)](https://www.libreoffice.org/) to generate legal-ready certificates instantly.
-* **Formatting Consistency:** Eliminates human error associated with manual Word document editing.
-* **Editable Drafts:** Includes a fallback feature where users can change the URL extension from `.pdf` to `.docx` to download a raw Word file for manual corrections if needed.
+* **No More Typos:** Because the system generates the document from the database, it eliminates the copy-paste errors common with manual Word files.
+* **Editable Drafts:** If a manual change is needed, the user can download a `.docx` version instead of the final `.pdf`.
 
-#### 3. Business Logic & Validation
+#### 3. Scheduling & Logic
+* **Prevents double-booking:** The system checks dates automatically to ensure "Prayer Intentions" don't conflict.
+* **Easy Management:** Allows the secretary to easily add, edit, or delete liturgical schedules.
 
-* **Conflict Detection:** Custom server-side validation for the "Prayer Intentions" module prevents duplicate requests for specific Mass dates.
-* **Schedule Management:** Full CRUD capabilities allow the secretary to manage liturgical schedules dynamically.
 
 #### 4. System Reliability & DevOps
 
