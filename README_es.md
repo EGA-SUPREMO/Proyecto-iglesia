@@ -3,6 +3,8 @@
   <img src="Documentacion/dashboard_screenshot.png" width="50%" />
 </p>
 
+> 🌐 Lea esto en otros idiomas: **[English](README.md)**, **Español**.
+
 > **Nota para el lector:** Este proyecto se desarrolló como proyecto final para una licenciatura en Informática (2024-2026), al servicio de la parroquia de San Diego de Alcalá y Candelaria.
 
 ## 📖 Descripción general
