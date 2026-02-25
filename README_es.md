@@ -3,7 +3,7 @@
   <img src="Documentacion/dashboard_screenshot.png" width="50%" />
 </p>
 
-> **Nota para el lector:** Este proyecto se desarrolló como proyecto final para una licenciatura en Ciencias Informáticas (2024-2026), al servicio de la parroquia de San Diego de Alcalá y Candelaria.
+> **Nota para el lector:** Este proyecto se desarrolló como proyecto final para una licenciatura en Informática (2024-2026), al servicio de la parroquia de San Diego de Alcalá y Candelaria.
 
 ## 📖 Descripción general
 
@@ -81,6 +81,7 @@ El sistema utiliza un **esquema relacional normalizado (MySQL/MariaDB)** en 15 t
 ### 🧬 Diagrama de relaciones entre entidades (ERD)
 
 ![Diagrama ER](Documentacion/diagram.png)
+
 ### 🚀 Instalación y configuración
 
 **Requisitos previos:**
@@ -123,13 +124,11 @@ composer install
 
 ### Contexto académico
 
-Este proyecto se llevó a cabo como proyecto final para obtener un título de Asociado en Ciencias (A.S.) en Informática.
+Este proyecto se llevó a cabo como proyecto final para obtener un título de Tecnico Superior Universitario (TSU) en Informática.
 
 * **Objetivo:** Optimizar la ejecución y la prestación de servicios para la parroquia de San Diego de Alcalá.
 * **Metodología:** Programación extrema (XP).
 * **Recopilación de datos:** Encuestas con escala Likert y análisis de datos basados en censos.
 
 ## Licencia
-Este proyecto está licenciado bajo la [Licencia Pública General de GNU (GPL) versión 3](LICENCIA)
-
-Traducción realizada con la versión gratuita del traductor DeepL.com 
+Este proyecto está licenciado bajo la [Licencia Pública General de GNU (GPL) versión 3](LICENSE)
