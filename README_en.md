@@ -1,4 +1,8 @@
 # Parish Management System (PMS)
+<p align="left">
+  <img src="Documentacion/dashboard_screenshot.png" width="50%" />
+</p>
+
 > **Note to Reader:** This project was developed as a Capstone for a T.S.U. in Computer Science (2024-2026), serving the San Diego de Alcalá and Candelaria parish house.
 
 ## 📖 Overview
@@ -14,8 +18,9 @@ Prior to this system, the parish relied on physical books and manual Word docume
 </p>
 
 <p align="left">
-  <img src="Documentacion/dashboard_screenshot.png" width="50%" />
-  <img src="Documentacion/example_certificate.png" width="50%" />
+  <img src="Documentacion/registro constancia solo feligres.gif" width="70%" />
+  <img src="Documentacion/registro constancia completa.gif" width="70%" />
+  <img src="Documentacion/example_certificate.png" width="60%" />
 </p>
 
 ## Key Features
@@ -75,7 +80,7 @@ The system utilizes a **normalized relational schema (MySQL/MariaDB)** across 15
 
 ### 🧬 Entity Relationship Diagram (ERD)
 
-*(TODO Entity-Relationship Diagram (ERD) image).*
+![Diagram ER](Documentacion/diagram.png)
 
 ---
 
