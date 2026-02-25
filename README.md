@@ -3,6 +3,8 @@
   <img src="Documentacion/dashboard_screenshot.png" width="50%" />
 </p>
 
+> 🌐 Read this in other languages: **English**, **[Español](README_es.md)**.
+
 > **Note to Reader:** This project was developed as a Capstone for a T.S.U. in Computer Science (2024-2026), serving the San Diego de Alcalá and Candelaria parish house.
 
 ## 📖 Overview
